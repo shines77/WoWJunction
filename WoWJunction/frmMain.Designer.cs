@@ -34,7 +34,7 @@
             // 
             // btnMountCN
             // 
-            this.btnMountCN.Location = new System.Drawing.Point(103, 91);
+            this.btnMountCN.Location = new System.Drawing.Point(124, 123);
             this.btnMountCN.Name = "btnMountCN";
             this.btnMountCN.Size = new System.Drawing.Size(107, 44);
             this.btnMountCN.TabIndex = 0;
@@ -44,7 +44,7 @@
             // 
             // btnCheck
             // 
-            this.btnCheck.Location = new System.Drawing.Point(103, 35);
+            this.btnCheck.Location = new System.Drawing.Point(124, 67);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(105, 39);
             this.btnCheck.TabIndex = 1;
@@ -54,7 +54,7 @@
             // 
             // btnMountTW
             // 
-            this.btnMountTW.Location = new System.Drawing.Point(103, 152);
+            this.btnMountTW.Location = new System.Drawing.Point(124, 184);
             this.btnMountTW.Name = "btnMountTW";
             this.btnMountTW.Size = new System.Drawing.Size(107, 44);
             this.btnMountTW.TabIndex = 2;
@@ -66,13 +66,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 252);
+            this.ClientSize = new System.Drawing.Size(362, 311);
             this.Controls.Add(this.btnMountTW);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.btnMountCN);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WoW Junction";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.ResumeLayout(false);
 
         }

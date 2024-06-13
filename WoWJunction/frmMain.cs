@@ -17,7 +17,11 @@ namespace WoWJunction
     public partial class frmMain : Form
     {
         private static string frmCaption = "WoWJunction";
+        private static string xmlConfigFile = "WoWJunction.config.xml";
+        private static string xmlConfigRoot = ""; // "configuration";
+        private bool xmlConfigFileExists = false;
         private volatile bool hasException = true;
+        private WoWConfig wowConfig = new WoWConfig();
 
         public frmMain()
         {
@@ -30,7 +34,8 @@ namespace WoWJunction
 
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (!result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else {
 #if (USE_TRY)
@@ -54,7 +59,8 @@ namespace WoWJunction
                 hasException = false;
 #endif
                 if (!hasException) {
-                    MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", frmCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", frmCaption,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -65,10 +71,12 @@ namespace WoWJunction
             string targetVolume = Path.GetPathRoot(targetDirectory);
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", frmCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -86,6 +94,50 @@ namespace WoWJunction
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw_";
 
             MountJunctionPoint(junctionPoint, targetDirectory, true);
+        }
+
+        private bool ReadConfigFromXml()
+        {
+            xmlConfigFileExists = false;
+            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
+            string xmlFile = strAppPath + @"\" + xmlConfigFile;
+            if (File.Exists(xmlFile)) {
+                //MessageBox.Show(this, $"xmlFile = \"{xmlFile}\"", frmCaption,
+                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WoWConfig xmlWoWConfig = XmlHelper.LoadFromXML<WoWConfig>(xmlFile, xmlConfigRoot);
+                if (xmlWoWConfig != null) {
+                    wowConfig = xmlWoWConfig;
+                    xmlConfigFileExists = true;
+                    return true;
+                }
+            }
+            else {
+                MessageBox.Show(this, $"xmlFile = \"{xmlFile}\" 不存在!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
+        }
+
+        private void SaveConfigToXml()
+        {
+            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
+            string xmlFile = strAppPath + @"\" + xmlConfigFile;
+            XmlHelper.SaveToXML<WoWConfig>(wowConfig, xmlFile, xmlConfigRoot);
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            ReadConfigFromXml();
+        }
+
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveConfigToXml();
         }
     }
 }
