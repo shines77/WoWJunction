@@ -11,6 +11,7 @@ using Microsoft.Win32.SafeHandles;
 //
 
 //
+// Reference (ZH-CN): https://learn.microsoft.com/zh-cn/windows/win32/fileio/reparse-points
 // Reference (ZH-CN): https://learn.microsoft.com/zh-cn/windows/win32/fileio/reparse-point-operations?redirectedfrom=MSDN
 // Reference (EN-US): https://learn.microsoft.com/en-us/windows/win32/fileio/reparse-points
 //
@@ -351,7 +352,7 @@ namespace WoWJunction
                         inBuffer, targetDirectoryBytes.Length + 20, IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
 
                     if (!result) {
-                        ThrowLastWin32Error("无法创建软链接。");
+                        ThrowLastWin32Error("无法创建软链接");
                     }
                 }
                 finally {
@@ -469,7 +470,7 @@ namespace WoWJunction
                         return null;
                     }
 
-                    ThrowLastWin32Error("无法获取 junction point 的信息。");
+                    ThrowLastWin32Error("无法获取 junction point 的信息");
                 }
 
                 var reparseDataBuffer = (REPARSE_DATA_BUFFER)
@@ -501,7 +502,7 @@ namespace WoWJunction
                 EFileAttributes.BackupSemantics | EFileAttributes.OpenReparsePoint, IntPtr.Zero), true);
 
             if (Marshal.GetLastWin32Error() != 0) {
-                ThrowLastWin32Error("无法打开 reparse point。");
+                ThrowLastWin32Error("无法打开 reparse point");
             }
 
             return reparsePointHandle;

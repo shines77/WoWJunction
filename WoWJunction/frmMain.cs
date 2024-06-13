@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,7 +16,7 @@ namespace WoWJunction
     public partial class frmMain : Form
     {
         private static string frmCaption = "WoWJunction";
-        private static string xmlConfigFile = "WoWJunction.config.xml";
+        private static string xmlConfigFile = "WoWJunction.exe.config.xml";
         private static string xmlConfigRoot = ""; // "configuration";
         private bool xmlConfigFileExists = false;
         private volatile bool hasException = true;
