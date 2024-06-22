@@ -72,7 +72,7 @@ namespace WoWJunction
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn_";
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
             string targetVolume = Path.GetPathRoot(targetDirectory);
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (result) {
@@ -88,7 +88,7 @@ namespace WoWJunction
         private void btnMountCN_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn_";
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
 
             MountJunctionPoint(junctionPoint, targetDirectory, true);
         }
@@ -96,7 +96,7 @@ namespace WoWJunction
         private void btnMountTW_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw_";
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";
 
             MountJunctionPoint(junctionPoint, targetDirectory, true);
         }

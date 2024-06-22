@@ -45,6 +45,7 @@
             this.lblWoWClassicPathTW = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnDefaultValue = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtBoxWoWRootPath
@@ -103,21 +104,21 @@
             // 
             this.lblTipWoWClassicPath.AutoSize = true;
             this.lblTipWoWClassicPath.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lblTipWoWClassicPath.Location = new System.Drawing.Point(26, 144);
+            this.lblTipWoWClassicPath.Location = new System.Drawing.Point(23, 145);
             this.lblTipWoWClassicPath.Name = "lblTipWoWClassicPath";
-            this.lblTipWoWClassicPath.Size = new System.Drawing.Size(364, 13);
+            this.lblTipWoWClassicPath.Size = new System.Drawing.Size(332, 13);
             this.lblTipWoWClassicPath.TabIndex = 7;
-            this.lblTipWoWClassicPath.Text = "默认值为 \"_classic_\"，不能使用绝对路径，推荐使用默认值";
+            this.lblTipWoWClassicPath.Text = "默认值为 \"\\_classic_\"，相对路径，建议不要修改此值";
             // 
             // lblTipWoWClassicPathCN
             // 
             this.lblTipWoWClassicPathCN.AutoSize = true;
             this.lblTipWoWClassicPathCN.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblTipWoWClassicPathCN.Location = new System.Drawing.Point(26, 224);
+            this.lblTipWoWClassicPathCN.Location = new System.Drawing.Point(24, 224);
             this.lblTipWoWClassicPathCN.Name = "lblTipWoWClassicPathCN";
-            this.lblTipWoWClassicPathCN.Size = new System.Drawing.Size(365, 13);
+            this.lblTipWoWClassicPathCN.Size = new System.Drawing.Size(372, 13);
             this.lblTipWoWClassicPathCN.TabIndex = 11;
-            this.lblTipWoWClassicPathCN.Text = "默认值为 \"_classic_cn\"，可使用绝对路径，推荐使用默认值";
+            this.lblTipWoWClassicPathCN.Text = "默认值为 \"\\_classic_cn\"，可使用绝对路径，推荐使用默认值";
             // 
             // btnBrowseWoWClassicPathCN
             // 
@@ -149,11 +150,11 @@
             // 
             this.lblTipWoWClassicPathTW.AutoSize = true;
             this.lblTipWoWClassicPathTW.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblTipWoWClassicPathTW.Location = new System.Drawing.Point(26, 301);
+            this.lblTipWoWClassicPathTW.Location = new System.Drawing.Point(24, 301);
             this.lblTipWoWClassicPathTW.Name = "lblTipWoWClassicPathTW";
-            this.lblTipWoWClassicPathTW.Size = new System.Drawing.Size(365, 13);
+            this.lblTipWoWClassicPathTW.Size = new System.Drawing.Size(372, 13);
             this.lblTipWoWClassicPathTW.TabIndex = 15;
-            this.lblTipWoWClassicPathTW.Text = "默认值为 \"_classic_tw\"，可使用绝对路径，推荐使用默认值";
+            this.lblTipWoWClassicPathTW.Text = "默认值为 \"\\_classic_tw\"，可使用绝对路径，推荐使用默认值";
             // 
             // btnBrowseWoWClassicPathTW
             // 
@@ -189,6 +190,7 @@
             this.btnApply.TabIndex = 16;
             this.btnApply.Text = "确定(&A)";
             this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
             // btnCancel
             // 
@@ -199,11 +201,21 @@
             this.btnCancel.Text = "取消(&C)";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
+            // btnDefaultValue
+            // 
+            this.btnDefaultValue.Location = new System.Drawing.Point(351, 108);
+            this.btnDefaultValue.Name = "btnDefaultValue";
+            this.btnDefaultValue.Size = new System.Drawing.Size(128, 29);
+            this.btnDefaultValue.TabIndex = 18;
+            this.btnDefaultValue.Text = "设置为默认值(&D)";
+            this.btnDefaultValue.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 375);
+            this.Controls.Add(this.btnDefaultValue);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.lblTipWoWClassicPathTW);
@@ -255,5 +267,6 @@
         private System.Windows.Forms.Label lblWoWClassicPathTW;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnDefaultValue;
     }
 }
