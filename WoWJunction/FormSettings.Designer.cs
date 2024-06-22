@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.txtBoxWoWRootPath = new System.Windows.Forms.TextBox();
             this.lblWoWRootPath = new System.Windows.Forms.Label();
             this.btnBrowseWoWRootPath = new System.Windows.Forms.Button();
@@ -70,6 +71,7 @@
             this.btnBrowseWoWRootPath.TabIndex = 2;
             this.btnBrowseWoWRootPath.Text = "浏览...";
             this.btnBrowseWoWRootPath.UseVisualStyleBackColor = true;
+            this.btnBrowseWoWRootPath.Click += new System.EventHandler(this.btnBrowseWoWRootPath_Click);
             // 
             // lblTip1
             // 
@@ -103,9 +105,9 @@
             this.lblTipWoWClassicPath.ForeColor = System.Drawing.Color.DodgerBlue;
             this.lblTipWoWClassicPath.Location = new System.Drawing.Point(26, 144);
             this.lblTipWoWClassicPath.Name = "lblTipWoWClassicPath";
-            this.lblTipWoWClassicPath.Size = new System.Drawing.Size(325, 13);
+            this.lblTipWoWClassicPath.Size = new System.Drawing.Size(364, 13);
             this.lblTipWoWClassicPath.TabIndex = 7;
-            this.lblTipWoWClassicPath.Text = "默认值为 \"_classic_\"，可修改，但不能选择本地路径";
+            this.lblTipWoWClassicPath.Text = "默认值为 \"_classic_\"，不能使用绝对路径，推荐使用默认值";
             // 
             // lblTipWoWClassicPathCN
             // 
@@ -113,9 +115,9 @@
             this.lblTipWoWClassicPathCN.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblTipWoWClassicPathCN.Location = new System.Drawing.Point(26, 224);
             this.lblTipWoWClassicPathCN.Name = "lblTipWoWClassicPathCN";
-            this.lblTipWoWClassicPathCN.Size = new System.Drawing.Size(352, 13);
+            this.lblTipWoWClassicPathCN.Size = new System.Drawing.Size(365, 13);
             this.lblTipWoWClassicPathCN.TabIndex = 11;
-            this.lblTipWoWClassicPathCN.Text = "默认值为 \"_classic_cn\"，路径可自定义，建议使用默认值";
+            this.lblTipWoWClassicPathCN.Text = "默认值为 \"_classic_cn\"，可使用绝对路径，推荐使用默认值";
             // 
             // btnBrowseWoWClassicPathCN
             // 
@@ -125,6 +127,7 @@
             this.btnBrowseWoWClassicPathCN.TabIndex = 10;
             this.btnBrowseWoWClassicPathCN.Text = "浏览...";
             this.btnBrowseWoWClassicPathCN.UseVisualStyleBackColor = true;
+            this.btnBrowseWoWClassicPathCN.Click += new System.EventHandler(this.btnBrowseWoWClassicPathCN_Click);
             // 
             // txtBoxWoWClassicPathCN
             // 
@@ -148,9 +151,9 @@
             this.lblTipWoWClassicPathTW.ForeColor = System.Drawing.Color.OrangeRed;
             this.lblTipWoWClassicPathTW.Location = new System.Drawing.Point(26, 301);
             this.lblTipWoWClassicPathTW.Name = "lblTipWoWClassicPathTW";
-            this.lblTipWoWClassicPathTW.Size = new System.Drawing.Size(352, 13);
+            this.lblTipWoWClassicPathTW.Size = new System.Drawing.Size(365, 13);
             this.lblTipWoWClassicPathTW.TabIndex = 15;
-            this.lblTipWoWClassicPathTW.Text = "默认值为 \"_classic_tw\"，路径可自定义，建议使用默认值";
+            this.lblTipWoWClassicPathTW.Text = "默认值为 \"_classic_tw\"，可使用绝对路径，推荐使用默认值";
             // 
             // btnBrowseWoWClassicPathTW
             // 
@@ -160,6 +163,7 @@
             this.btnBrowseWoWClassicPathTW.TabIndex = 14;
             this.btnBrowseWoWClassicPathTW.Text = "浏览...";
             this.btnBrowseWoWClassicPathTW.UseVisualStyleBackColor = true;
+            this.btnBrowseWoWClassicPathTW.Click += new System.EventHandler(this.btnBrowseWoWClassicPathTW_Click);
             // 
             // txtBoxWoWClassicPathTW
             // 
@@ -218,12 +222,15 @@
             this.Controls.Add(this.lblWoWRootPath);
             this.Controls.Add(this.txtBoxWoWRootPath);
             this.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSettings";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "《魔兽世界》怀旧服路径设置";
+            this.Load += new System.EventHandler(this.FormSettings_Load);
+            this.Shown += new System.EventHandler(this.FormSettings_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

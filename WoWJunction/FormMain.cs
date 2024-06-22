@@ -21,10 +21,16 @@ namespace WoWJunction
         private bool xmlConfigFileExists = false;
         private volatile bool hasException = true;
         private WoWConfig wowConfig = new WoWConfig();
+        private WoWConfig wowConfigFromFile = new WoWConfig();
 
         public FormMain()
         {
             InitializeComponent();
+        }
+
+        public WoWConfig GetWoWConfig()
+        {
+            return wowConfigFromFile;
         }
 
         private void MountJunctionPoint(string junctionPoint, string targetDirectory, bool overwrite = true)
@@ -105,7 +111,7 @@ namespace WoWJunction
                 //    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 WoWConfig xmlWoWConfig = XmlHelper.LoadFromXML<WoWConfig>(xmlFile, xmlConfigRoot);
                 if (xmlWoWConfig != null) {
-                    wowConfig = xmlWoWConfig;
+                    wowConfigFromFile = xmlWoWConfig;
                     xmlConfigFileExists = true;
                     return true;
                 }
@@ -121,7 +127,7 @@ namespace WoWJunction
         {
             string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
             string xmlFile = strAppPath + @"\" + xmlConfigFile;
-            XmlHelper.SaveToXML<WoWConfig>(wowConfig, xmlFile, xmlConfigRoot);
+            XmlHelper.SaveToXML<WoWConfig>(wowConfigFromFile, xmlFile, xmlConfigRoot);
         }
 
         private void frmMain_Load(object sender, EventArgs e)
