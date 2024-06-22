@@ -6,6 +6,10 @@ namespace WoWJunction
     [XmlRoot("WoWConfig")]
     public class WoWConfig
     {
+        public const string DefaultWoWClassicPath = @"\_classic_";
+        public const string DefaultWoWClassicPathCN = @"\_classic_cn";
+        public const string DefaultWoWClassicPathTW = @"\_classic_tw";
+
         public class Folders
         {
             [XmlElement("wow_root_path")]
@@ -23,9 +27,9 @@ namespace WoWJunction
             public Folders()
             {
                 wow_root_path = @"C:\Blizzard\World of Warcraft";
-                wow_classic_path = "_classic_";
-                wow_classic_path_cn = "_classic_cn";
-                wow_classic_path_tw = "_classic_tw";
+                wow_classic_path = DefaultWoWClassicPath;
+                wow_classic_path_cn = DefaultWoWClassicPathCN;
+                wow_classic_path_tw = DefaultWoWClassicPathTW;
             }
         }
 
