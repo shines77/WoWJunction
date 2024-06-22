@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace WoWJunction
 {
-    public partial class frmMain : Form
+    public partial class FormMain : Form
     {
         private static string frmCaption = "WoWJunction";
         private static string xmlConfigFile = "WoWJunction.exe.config.xml";
@@ -22,7 +22,7 @@ namespace WoWJunction
         private volatile bool hasException = true;
         private WoWConfig wowConfig = new WoWConfig();
 
-        public frmMain()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -137,6 +137,12 @@ namespace WoWJunction
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfigToXml();
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            FormSettings frmSettings = new FormSettings(this);
+            frmSettings.ShowDialog();
         }
     }
 }
