@@ -48,7 +48,7 @@
             // 
             // txtBoxWoWRootPath
             // 
-            this.txtBoxWoWRootPath.Location = new System.Drawing.Point(23, 45);
+            this.txtBoxWoWRootPath.Location = new System.Drawing.Point(23, 38);
             this.txtBoxWoWRootPath.Name = "txtBoxWoWRootPath";
             this.txtBoxWoWRootPath.Size = new System.Drawing.Size(456, 22);
             this.txtBoxWoWRootPath.TabIndex = 0;
@@ -64,7 +64,7 @@
             // 
             // btnBrowseWoWRootPath
             // 
-            this.btnBrowseWoWRootPath.Location = new System.Drawing.Point(497, 40);
+            this.btnBrowseWoWRootPath.Location = new System.Drawing.Point(497, 33);
             this.btnBrowseWoWRootPath.Name = "btnBrowseWoWRootPath";
             this.btnBrowseWoWRootPath.Size = new System.Drawing.Size(72, 29);
             this.btnBrowseWoWRootPath.TabIndex = 2;
@@ -75,7 +75,7 @@
             // 
             this.lblTip1.AutoSize = true;
             this.lblTip1.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblTip1.Location = new System.Drawing.Point(20, 84);
+            this.lblTip1.Location = new System.Drawing.Point(20, 68);
             this.lblTip1.Name = "lblTip1";
             this.lblTip1.Size = new System.Drawing.Size(526, 13);
             this.lblTip1.TabIndex = 3;
@@ -84,7 +84,7 @@
             // lblWoWClassicPath
             // 
             this.lblWoWClassicPath.AutoSize = true;
-            this.lblWoWClassicPath.Location = new System.Drawing.Point(20, 112);
+            this.lblWoWClassicPath.Location = new System.Drawing.Point(20, 96);
             this.lblWoWClassicPath.Name = "lblWoWClassicPath";
             this.lblWoWClassicPath.Size = new System.Drawing.Size(137, 13);
             this.lblWoWClassicPath.TabIndex = 4;
@@ -92,7 +92,7 @@
             // 
             // txtBoxWoWClassicPath
             // 
-            this.txtBoxWoWClassicPath.Location = new System.Drawing.Point(23, 139);
+            this.txtBoxWoWClassicPath.Location = new System.Drawing.Point(23, 115);
             this.txtBoxWoWClassicPath.Name = "txtBoxWoWClassicPath";
             this.txtBoxWoWClassicPath.Size = new System.Drawing.Size(175, 22);
             this.txtBoxWoWClassicPath.TabIndex = 5;
@@ -101,7 +101,7 @@
             // 
             this.lblTipWoWClassicPath.AutoSize = true;
             this.lblTipWoWClassicPath.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lblTipWoWClassicPath.Location = new System.Drawing.Point(26, 174);
+            this.lblTipWoWClassicPath.Location = new System.Drawing.Point(26, 144);
             this.lblTipWoWClassicPath.Name = "lblTipWoWClassicPath";
             this.lblTipWoWClassicPath.Size = new System.Drawing.Size(325, 13);
             this.lblTipWoWClassicPath.TabIndex = 7;
@@ -111,7 +111,7 @@
             // 
             this.lblTipWoWClassicPathCN.AutoSize = true;
             this.lblTipWoWClassicPathCN.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblTipWoWClassicPathCN.Location = new System.Drawing.Point(26, 275);
+            this.lblTipWoWClassicPathCN.Location = new System.Drawing.Point(26, 224);
             this.lblTipWoWClassicPathCN.Name = "lblTipWoWClassicPathCN";
             this.lblTipWoWClassicPathCN.Size = new System.Drawing.Size(352, 13);
             this.lblTipWoWClassicPathCN.TabIndex = 11;
@@ -119,7 +119,7 @@
             // 
             // btnBrowseWoWClassicPathCN
             // 
-            this.btnBrowseWoWClassicPathCN.Location = new System.Drawing.Point(497, 234);
+            this.btnBrowseWoWClassicPathCN.Location = new System.Drawing.Point(497, 189);
             this.btnBrowseWoWClassicPathCN.Name = "btnBrowseWoWClassicPathCN";
             this.btnBrowseWoWClassicPathCN.Size = new System.Drawing.Size(72, 29);
             this.btnBrowseWoWClassicPathCN.TabIndex = 10;
@@ -128,7 +128,7 @@
             // 
             // txtBoxWoWClassicPathCN
             // 
-            this.txtBoxWoWClassicPathCN.Location = new System.Drawing.Point(23, 239);
+            this.txtBoxWoWClassicPathCN.Location = new System.Drawing.Point(23, 194);
             this.txtBoxWoWClassicPathCN.Name = "txtBoxWoWClassicPathCN";
             this.txtBoxWoWClassicPathCN.Size = new System.Drawing.Size(456, 22);
             this.txtBoxWoWClassicPathCN.TabIndex = 9;
@@ -136,7 +136,7 @@
             // lblWoWClassicPathCN
             // 
             this.lblWoWClassicPathCN.AutoSize = true;
-            this.lblWoWClassicPathCN.Location = new System.Drawing.Point(20, 210);
+            this.lblWoWClassicPathCN.Location = new System.Drawing.Point(20, 175);
             this.lblWoWClassicPathCN.Name = "lblWoWClassicPathCN";
             this.lblWoWClassicPathCN.Size = new System.Drawing.Size(189, 13);
             this.lblWoWClassicPathCN.TabIndex = 8;
@@ -146,7 +146,7 @@
             // 
             this.lblTipWoWClassicPathTW.AutoSize = true;
             this.lblTipWoWClassicPathTW.ForeColor = System.Drawing.Color.OrangeRed;
-            this.lblTipWoWClassicPathTW.Location = new System.Drawing.Point(26, 368);
+            this.lblTipWoWClassicPathTW.Location = new System.Drawing.Point(26, 301);
             this.lblTipWoWClassicPathTW.Name = "lblTipWoWClassicPathTW";
             this.lblTipWoWClassicPathTW.Size = new System.Drawing.Size(352, 13);
             this.lblTipWoWClassicPathTW.TabIndex = 15;
@@ -154,7 +154,7 @@
             // 
             // btnBrowseWoWClassicPathTW
             // 
-            this.btnBrowseWoWClassicPathTW.Location = new System.Drawing.Point(497, 328);
+            this.btnBrowseWoWClassicPathTW.Location = new System.Drawing.Point(497, 267);
             this.btnBrowseWoWClassicPathTW.Name = "btnBrowseWoWClassicPathTW";
             this.btnBrowseWoWClassicPathTW.Size = new System.Drawing.Size(72, 29);
             this.btnBrowseWoWClassicPathTW.TabIndex = 14;
@@ -163,7 +163,7 @@
             // 
             // txtBoxWoWClassicPathTW
             // 
-            this.txtBoxWoWClassicPathTW.Location = new System.Drawing.Point(23, 332);
+            this.txtBoxWoWClassicPathTW.Location = new System.Drawing.Point(23, 272);
             this.txtBoxWoWClassicPathTW.Name = "txtBoxWoWClassicPathTW";
             this.txtBoxWoWClassicPathTW.Size = new System.Drawing.Size(456, 22);
             this.txtBoxWoWClassicPathTW.TabIndex = 13;
@@ -171,7 +171,7 @@
             // lblWoWClassicPathTW
             // 
             this.lblWoWClassicPathTW.AutoSize = true;
-            this.lblWoWClassicPathTW.Location = new System.Drawing.Point(20, 306);
+            this.lblWoWClassicPathTW.Location = new System.Drawing.Point(20, 253);
             this.lblWoWClassicPathTW.Name = "lblWoWClassicPathTW";
             this.lblWoWClassicPathTW.Size = new System.Drawing.Size(189, 13);
             this.lblWoWClassicPathTW.TabIndex = 12;
@@ -179,7 +179,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(200, 401);
+            this.btnApply.Location = new System.Drawing.Point(196, 331);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(86, 29);
             this.btnApply.TabIndex = 16;
@@ -188,7 +188,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(322, 401);
+            this.btnCancel.Location = new System.Drawing.Point(318, 331);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(86, 29);
             this.btnCancel.TabIndex = 17;
@@ -199,7 +199,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(590, 445);
+            this.ClientSize = new System.Drawing.Size(590, 375);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.lblTipWoWClassicPathTW);
@@ -218,7 +218,10 @@
             this.Controls.Add(this.lblWoWRootPath);
             this.Controls.Add(this.txtBoxWoWRootPath);
             this.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSettings";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "《魔兽世界》怀旧服路径设置";
             this.ResumeLayout(false);
