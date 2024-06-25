@@ -38,6 +38,25 @@ namespace WoWJunction
             return wowConfigFromFile;
         }
 
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            ReadConfigFromXml();
+        }
+
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            txtBoxMountFrom.Text = wowConfig.folders.wow_classic_path;
+            txtBoxMountTo.Text = wowConfig.folders.wow_classic_path_tw;
+
+            txtBoxWoWClassicWoWCN.Text = wowConfigFromFile.folders.wow_classic_path_cn;
+            txtBoxWoWClassicWoWTW.Text = wowConfigFromFile.folders.wow_classic_path_tw;
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveConfigToXml();
+        }
+
         private void MountJunctionPoint(string junctionPoint, string targetDirectory, bool overwrite = true)
         {
             string targetVolume = Path.GetPathRoot(targetDirectory);
@@ -75,37 +94,6 @@ namespace WoWJunction
             }
         }
 
-        private void btnCheck_Click(object sender, EventArgs e)
-        {
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
-            string targetVolume = Path.GetPathRoot(targetDirectory);
-            bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
-            if (result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", frmCaption,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void btnMountToCN_Click(object sender, EventArgs e)
-        {
-            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
-
-            MountJunctionPoint(junctionPoint, targetDirectory, true);
-        }
-
-        private void btnMountToTW_Click(object sender, EventArgs e)
-        {
-            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";
-
-            MountJunctionPoint(junctionPoint, targetDirectory, true);
-        }
-
         private bool ReadConfigFromXml()
         {
             xmlConfigFileExists = false;
@@ -135,21 +123,6 @@ namespace WoWJunction
             XmlHelper.SaveToXML<WoWConfig>(wowConfigFromFile, xmlFile, xmlConfigRoot);
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            ReadConfigFromXml();
-        }
-
-        private void frmMain_Shown(object sender, EventArgs e)
-        {
-            //
-        }
-
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveConfigToXml();
-        }
-
         private void btnSettings_Click(object sender, EventArgs e)
         {
             FormSettings frmSettings = new FormSettings(this);
@@ -157,6 +130,37 @@ namespace WoWJunction
             if (result == DialogResult.OK) {
                 wowConfig = frmSettings.GetWoWConfig();
                 wowConfigFromFile = frmSettings.GetWoWConfigToFile();
+            }
+        }
+
+        private void btnMountToCN_Click(object sender, EventArgs e)
+        {
+            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
+
+            MountJunctionPoint(junctionPoint, targetDirectory, true);
+        }
+
+        private void btnMountToTW_Click(object sender, EventArgs e)
+        {
+            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";
+
+            MountJunctionPoint(junctionPoint, targetDirectory, true);
+        }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
+            string targetVolume = Path.GetPathRoot(targetDirectory);
+            bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
+            if (result) {
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else {
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
