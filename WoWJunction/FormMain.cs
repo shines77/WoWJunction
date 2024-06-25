@@ -90,7 +90,7 @@ namespace WoWJunction
             }
         }
 
-        private void btnMountCN_Click(object sender, EventArgs e)
+        private void btnMountToCN_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
@@ -98,7 +98,7 @@ namespace WoWJunction
             MountJunctionPoint(junctionPoint, targetDirectory, true);
         }
 
-        private void btnMountTW_Click(object sender, EventArgs e)
+        private void btnMountToTW_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";

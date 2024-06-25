@@ -194,6 +194,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(318, 331);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(86, 29);
@@ -214,8 +215,10 @@
             // 
             // FormSettings
             // 
+            this.AcceptButton = this.btnApply;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(590, 375);
             this.Controls.Add(this.btnDefaultValue);
             this.Controls.Add(this.btnCancel);
@@ -235,7 +238,9 @@
             this.Controls.Add(this.btnBrowseWoWRootPath);
             this.Controls.Add(this.lblWoWRootPath);
             this.Controls.Add(this.txtBoxWoWRootPath);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
