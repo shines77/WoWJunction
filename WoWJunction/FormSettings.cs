@@ -24,18 +24,22 @@ namespace WoWJunction
         public const int ERR_WOW_ROOT_PATH_IS_NOT_A_ABSOLUTE_PATH = -1;
         public const int ERR_WOW_ROOT_PATH_IS_NOT_A_DIRECTORY = -2;
         public const int ERR_WOW_ROOT_PATH_NO_EXISTS = -3;
+        public const int ERR_WOW_ROOT_PATH_IS_EMPTY = -4;
 
         // wow_classic_path
         public const int ERR_WOW_CLASSIC_PATH_IS_NOT_A_RELATIVE_PATH = -11;
         public const int ERR_WOW_CLASSIC_PATH_MUST_START_WITH_PATH_SEPARATOR = -12;
+        public const int ERR_WOW_CLASSIC_PATH_IS_EMPTY = -13;
 
         // wow_classic_path_cn
-        public const int ERR_WOW_CLASSIC_CN_PATH_MUST_START_WITH_PATH_SEPARATOR = -21;
-        public const int ERR_WOW_CLASSIC_CN_PATH_NO_EXISTS = -22;
+        public const int ERR_WOW_CLASSIC_PATH_CN_MUST_START_WITH_PATH_SEPARATOR = -21;
+        public const int ERR_WOW_CLASSIC_PATH_CN_NO_EXISTS = -22;
+        public const int ERR_WOW_CLASSIC_PATH_CN_IS_EMPTY = -23;
 
         // wow_classic_path_tw
-        public const int ERR_WOW_CLASSIC_TW_PATH_MUST_START_WITH_PATH_SEPARATOR = -31;
-        public const int ERR_WOW_CLASSIC_TW_PATH_NO_EXISTS = -32;
+        public const int ERR_WOW_CLASSIC_PATH_TW_MUST_START_WITH_PATH_SEPARATOR = -31;
+        public const int ERR_WOW_CLASSIC_PATH_TW_NO_EXISTS = -32;
+        public const int ERR_WOW_CLASSIC_PATH_TW_IS_EMPTY = -33;
 
         private FormMain parent = null;
         private WoWConfig wowConfig = new WoWConfig();
@@ -69,6 +73,13 @@ namespace WoWJunction
             return wowConfigToFile;
         }
 
+        private void RestoreToDefaultValue()
+        {
+            txtBoxWoWClassicPath.Text = WoWConfig.DefaultWoWClassicPath;
+            txtBoxWoWClassicPathCN.Text = WoWConfig.DefaultWoWClassicPathCN;
+            txtBoxWoWClassicPathTW.Text = WoWConfig.DefaultWoWClassicPathTW;
+        }
+
         private void LoadUIData()
         {
             txtBoxWoWRootPath.Text = wowConfigToFile.folders.wow_root_path;
@@ -94,6 +105,20 @@ namespace WoWJunction
             txtBoxWoWClassicPathTW.Text = txtBoxWoWClassicPathTW.Text.Trim();
         }
 
+        private bool HasAnyConfigChanged()
+        {
+            bool changed = false;
+            if (wowConfigToFile.folders.wow_root_path != txtBoxWoWRootPath.Text)
+                return true;
+            if (wowConfigToFile.folders.wow_classic_path != txtBoxWoWClassicPath.Text)
+                return true;
+            if (wowConfigToFile.folders.wow_classic_path_cn != txtBoxWoWClassicPathCN.Text)
+                return true;
+            if (wowConfigToFile.folders.wow_classic_path_tw != txtBoxWoWClassicPathTW.Text)
+                return true;
+            return changed;
+        }
+
         private string FormatValidateError(int err_no)
         {
             switch (err_no) {
@@ -104,24 +129,32 @@ namespace WoWJunction
                     return "《魔兽世界》主目录必须是一个文件夹，而不是文件。";
                 case ERR_WOW_ROOT_PATH_NO_EXISTS:
                     return "指定的《魔兽世界》主目录不存在或者不是文件夹，请检查设置。";
+                case ERR_WOW_ROOT_PATH_IS_EMPTY:
+                    return "《魔兽世界》主目录不能为空！";
 
                 // wow_classic_path
                 case ERR_WOW_CLASSIC_PATH_IS_NOT_A_RELATIVE_PATH:
                     return "《魔兽世界》怀旧服目录必须是一个相对路径，不能使用绝对路径。";
                 case ERR_WOW_CLASSIC_PATH_MUST_START_WITH_PATH_SEPARATOR:
                     return "《魔兽世界》怀旧服目录名必须以 '\\' 或 '/' 字符开头。";
+                case ERR_WOW_CLASSIC_PATH_IS_EMPTY:
+                    return "《魔兽世界》怀旧服目录名不能为空！";
 
                 // wow_classic_path_cn
-                case ERR_WOW_CLASSIC_CN_PATH_MUST_START_WITH_PATH_SEPARATOR:
+                case ERR_WOW_CLASSIC_PATH_CN_MUST_START_WITH_PATH_SEPARATOR:
                     return "《魔兽世界》怀旧服（国服）目录为相对路径时，必须以 '\\' 或 '/' 字符开头。";
-                case ERR_WOW_CLASSIC_CN_PATH_NO_EXISTS:
+                case ERR_WOW_CLASSIC_PATH_CN_NO_EXISTS:
                     return "《魔兽世界》怀旧服（国服）目录不存在，请检查设置。";
+                case ERR_WOW_CLASSIC_PATH_CN_IS_EMPTY:
+                    return "《魔兽世界》怀旧服（国服）目录名不能为空！";
 
                 // wow_classic_path_tw
-                case ERR_WOW_CLASSIC_TW_PATH_MUST_START_WITH_PATH_SEPARATOR:
+                case ERR_WOW_CLASSIC_PATH_TW_MUST_START_WITH_PATH_SEPARATOR:
                     return "《魔兽世界》怀旧服（亚服）目录为相对路径时，必须以 '\\' 或 '/' 字符开头。";
-                case ERR_WOW_CLASSIC_TW_PATH_NO_EXISTS:
+                case ERR_WOW_CLASSIC_PATH_TW_NO_EXISTS:
                     return "《魔兽世界》怀旧服（亚服）目录不存在，请检查设置。";
+                case ERR_WOW_CLASSIC_PATH_TW_IS_EMPTY:
+                    return "《魔兽世界》怀旧服（亚服）目录名不能为空！";
 
                 default:
                     return "未知错误，请检查设置。";
@@ -137,6 +170,11 @@ namespace WoWJunction
 
             // wow_root_path: 必须是一个绝对路径, 且必须是一个目录, 且必须存在.
             string wowRootPath = txtBoxWoWRootPath.Text;
+            if (String.IsNullOrEmpty(wowRootPath)) {
+                result.err_no = ERR_WOW_ROOT_PATH_IS_EMPTY;
+                result.success = false;
+                return result;
+            }
             // 转化为完整的路径(移除相对路径标识)
             wowRootPath = Path.GetFullPath(wowRootPath);
             // 不带目录分隔符的完整路径
@@ -169,6 +207,11 @@ namespace WoWJunction
 
             // wow_classic_path: 必须是一个相对路径, 且以"\"开头, 可以不存在.
             string wowClassicPath = txtBoxWoWClassicPath.Text;
+            if (String.IsNullOrEmpty(wowClassicPath)) {
+                result.err_no = ERR_WOW_CLASSIC_PATH_IS_EMPTY;
+                result.success = false;
+                return result;
+            }
             if (PathUtils.IsRelativePath(wowClassicPath)) {
                 if (!(wowClassicPath.StartsWith("\\") | wowClassicPath.StartsWith("/"))) {
                     result.err_no = ERR_WOW_CLASSIC_PATH_MUST_START_WITH_PATH_SEPARATOR;
@@ -188,16 +231,21 @@ namespace WoWJunction
 
             // wow_classic_path_cn: 值为相对路径时, 必须以"\"开头, 该相对路径或绝对路径必须存在.
             string wowClassicPathCN = txtBoxWoWClassicPathCN.Text;
+            if (String.IsNullOrEmpty(wowClassicPathCN)) {
+                result.err_no = ERR_WOW_CLASSIC_PATH_CN_IS_EMPTY;
+                result.success = false;
+                return result;
+            }
             if (PathUtils.IsRelativePath(wowClassicPathCN)) {
                 if (!(wowClassicPathCN.StartsWith("\\") | wowClassicPathCN.StartsWith("/"))) {
-                    result.err_no = ERR_WOW_CLASSIC_CN_PATH_MUST_START_WITH_PATH_SEPARATOR;
+                    result.err_no = ERR_WOW_CLASSIC_PATH_CN_MUST_START_WITH_PATH_SEPARATOR;
                 } else {
                     // 拼接相对路径
                     wowClassicPathCN = PathUtils.CombinePath(wowRootDirName, wowClassicPathCN);
                 }
             }
             if (!Directory.Exists(wowClassicPathCN)) {
-                result.err_no = ERR_WOW_CLASSIC_CN_PATH_NO_EXISTS;
+                result.err_no = ERR_WOW_CLASSIC_PATH_CN_NO_EXISTS;
             }
 
             if (result.err_no < 0) {
@@ -210,9 +258,14 @@ namespace WoWJunction
 
             // wow_classic_path_cn: 值为相对路径时, 必须以"\"开头, 该相对路径或绝对路径必须存在.
             string wowClassicPathTW = txtBoxWoWClassicPathTW.Text;
+            if (String.IsNullOrEmpty(wowClassicPathTW)) {
+                result.err_no = ERR_WOW_CLASSIC_PATH_TW_IS_EMPTY;
+                result.success = false;
+                return result;
+            }
             if (PathUtils.IsRelativePath(wowClassicPathTW)) {
                 if (!(wowClassicPathTW.StartsWith("\\") | wowClassicPathTW.StartsWith("/"))) {
-                    result.err_no = ERR_WOW_CLASSIC_TW_PATH_MUST_START_WITH_PATH_SEPARATOR;
+                    result.err_no = ERR_WOW_CLASSIC_PATH_TW_MUST_START_WITH_PATH_SEPARATOR;
                 }
                 else {
                     // 拼接相对路径
@@ -220,7 +273,7 @@ namespace WoWJunction
                 }
             }
             if (!Directory.Exists(wowClassicPathTW)) {
-                result.err_no = ERR_WOW_CLASSIC_TW_PATH_NO_EXISTS;
+                result.err_no = ERR_WOW_CLASSIC_PATH_TW_NO_EXISTS;
             }
 
             if (result.err_no < 0) {
@@ -306,19 +359,50 @@ namespace WoWJunction
             }
         }
 
-        private void btnApply_Click(object sender, EventArgs e)
+        private void btnDefaultValue_Click(object sender, EventArgs e)
+        {
+            RestoreToDefaultValue();
+        }
+
+        private void ApplyCurrentSettings()
         {
             WoWConfig outWoWConfig = new WoWConfig();
             ValidateResult result = ValidateUIData(outWoWConfig);
             if (!result.success) {
                 string message = FormatValidateError(result.err_no);
                 MessageBox.Show(message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else {
+            }
+            else {
                 UIDataExchange();
                 wowConfig = outWoWConfig;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            TrimUIData();
+            if (HasAnyConfigChanged()) {
+                ApplyCurrentSettings();
+            } else {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            TrimUIData();
+            if (HasAnyConfigChanged()) {
+                var result = MessageBox.Show("设置已发生改变，是否要保存当前设置？", "提示...", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes) {
+                    ApplyCurrentSettings();
+                    return;
+                }
+            }
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static bool IsRelativePath(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 if (path.StartsWith("\\") | path.StartsWith("/")) {
                     if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
@@ -40,7 +40,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static bool IsAbsolutePath(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 if (path.StartsWith("\\") | path.StartsWith("/")) {
                     if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
@@ -60,7 +60,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static string RemovePathTailSeparator(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 if (path.EndsWith("\\") | path.EndsWith("/")) {
                     path = path.Substring(0, path.Length - 1);
@@ -76,7 +76,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static string RemoveFullPathTailSeparator(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 path = Path.GetFullPath(path);
                 if (path.EndsWith("\\") | path.EndsWith("/")) {
@@ -93,7 +93,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static string NormalizeFullPath(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 path = Path.GetFullPath(path);
                 if (path.EndsWith("\\") | path.EndsWith("/")) {
@@ -110,7 +110,7 @@ namespace WoWJunction
         /// <returns></returns>
         public static string NormalizeFullPathWithSep(string path)
         {
-            path = path.Trim();
+            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
                 path = Path.GetFullPath(path);
                 if (!(path.EndsWith("\\") | path.EndsWith("/"))) {
@@ -136,7 +136,7 @@ namespace WoWJunction
             else
                 separatorChar2 = "\\";
 
-            path1 = path1.Trim();
+            path1.Trim();
             if (path1.EndsWith(separatorChar1)) {
                 // Do nothing !!
             }
@@ -146,7 +146,7 @@ namespace WoWJunction
             }
 
             // 当 path2 以 "\\" 或 "/" 开头时, 先移除开头的 DirectorySeparatorChar.
-            path2 = path2.Trim();
+            path2.Trim();
             if (path2.StartsWith(separatorChar1) | path2.StartsWith(separatorChar2)) {
                 if (path2.Length > 0)
                     path2 = path2.Substring(1, path2.Length - 1);

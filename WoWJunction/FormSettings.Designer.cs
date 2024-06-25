@@ -200,15 +200,17 @@
             this.btnCancel.TabIndex = 17;
             this.btnCancel.Text = "取消(&C)";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnDefaultValue
             // 
-            this.btnDefaultValue.Location = new System.Drawing.Point(351, 108);
+            this.btnDefaultValue.Location = new System.Drawing.Point(214, 110);
             this.btnDefaultValue.Name = "btnDefaultValue";
             this.btnDefaultValue.Size = new System.Drawing.Size(128, 29);
             this.btnDefaultValue.TabIndex = 18;
-            this.btnDefaultValue.Text = "设置为默认值(&D)";
+            this.btnDefaultValue.Text = "恢复为默认值(&D)";
             this.btnDefaultValue.UseVisualStyleBackColor = true;
+            this.btnDefaultValue.Click += new System.EventHandler(this.btnDefaultValue_Click);
             // 
             // FormSettings
             // 
