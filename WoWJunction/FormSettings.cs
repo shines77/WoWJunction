@@ -39,12 +39,14 @@ namespace WoWJunction
 
         private FormMain parent = null;
         private WoWConfig wowConfig = new WoWConfig();
+        private WoWConfig wowConfigToFile = new WoWConfig();
 
         public FormSettings(FormMain parent)
         {
             InitializeComponent();
             this.parent = parent;
             wowConfig = parent.GetWoWConfig();
+            wowConfigToFile = parent.GetWoWConfigFromFile();
         }
 
         private void FormSettings_Load(object sender, EventArgs e)
@@ -57,21 +59,39 @@ namespace WoWJunction
             btnBrowseWoWRootPath.Focus();
         }
 
+        public WoWConfig GetWoWConfig()
+        {
+            return wowConfig;
+        }
+
+        public WoWConfig GetWoWConfigToFile()
+        {
+            return wowConfigToFile;
+        }
+
         private void LoadUIData()
         {
-            txtBoxWoWRootPath.Text = wowConfig.folders.wow_root_path;
-            txtBoxWoWClassicPath.Text = wowConfig.folders.wow_classic_path;
-            txtBoxWoWClassicPathCN.Text = wowConfig.folders.wow_classic_path_cn;
-            txtBoxWoWClassicPathTW.Text = wowConfig.folders.wow_classic_path_tw;
+            txtBoxWoWRootPath.Text = wowConfigToFile.folders.wow_root_path;
+            txtBoxWoWClassicPath.Text = wowConfigToFile.folders.wow_classic_path;
+            txtBoxWoWClassicPathCN.Text = wowConfigToFile.folders.wow_classic_path_cn;
+            txtBoxWoWClassicPathTW.Text = wowConfigToFile.folders.wow_classic_path_tw;
         }
 
         private bool UIDataExchange()
         {
-            wowConfig.folders.wow_root_path = txtBoxWoWRootPath.Text.Trim();
-            wowConfig.folders.wow_classic_path = txtBoxWoWClassicPath.Text.Trim();
-            wowConfig.folders.wow_classic_path_cn = txtBoxWoWClassicPathCN.Text.Trim();
-            wowConfig.folders.wow_classic_path_tw = txtBoxWoWClassicPathTW.Text.Trim();
+            wowConfigToFile.folders.wow_root_path = txtBoxWoWRootPath.Text.Trim();
+            wowConfigToFile.folders.wow_classic_path = txtBoxWoWClassicPath.Text.Trim();
+            wowConfigToFile.folders.wow_classic_path_cn = txtBoxWoWClassicPathCN.Text.Trim();
+            wowConfigToFile.folders.wow_classic_path_tw = txtBoxWoWClassicPathTW.Text.Trim();
             return false;
+        }
+
+        private void TrimUIData()
+        {
+            txtBoxWoWRootPath.Text = txtBoxWoWRootPath.Text.Trim();
+            txtBoxWoWClassicPath.Text = txtBoxWoWClassicPath.Text.Trim();
+            txtBoxWoWClassicPathCN.Text = txtBoxWoWClassicPathCN.Text.Trim();
+            txtBoxWoWClassicPathTW.Text = txtBoxWoWClassicPathTW.Text.Trim();
         }
 
         private string FormatValidateError(int err_no)
@@ -108,12 +128,15 @@ namespace WoWJunction
             }
         }
 
-        private ValidateResult ValidateUIData()
+        private ValidateResult ValidateUIData(WoWConfig outWoWConfig)
         {
+            // 先把输入数据的前后空格去掉
+            TrimUIData();
+
             ValidateResult result = new ValidateResult();
 
             // wow_root_path: 必须是一个绝对路径, 且必须是一个目录, 且必须存在.
-            string wowRootPath = txtBoxWoWRootPath.Text.Trim();
+            string wowRootPath = txtBoxWoWRootPath.Text;
             // 转化为完整的路径(移除相对路径标识)
             wowRootPath = Path.GetFullPath(wowRootPath);
             // 不带目录分隔符的完整路径
@@ -141,8 +164,11 @@ namespace WoWJunction
                 return result;
             }
 
+            // 取不带 Separator 的完全路径
+            outWoWConfig.folders.wow_root_path = wowRootPathNoSep;
+
             // wow_classic_path: 必须是一个相对路径, 且以"\"开头, 可以不存在.
-            string wowClassicPath = txtBoxWoWClassicPath.Text.Trim();
+            string wowClassicPath = txtBoxWoWClassicPath.Text;
             if (PathUtils.IsRelativePath(wowClassicPath)) {
                 if (!(wowClassicPath.StartsWith("\\") | wowClassicPath.StartsWith("/"))) {
                     result.err_no = ERR_WOW_CLASSIC_PATH_MUST_START_WITH_PATH_SEPARATOR;
@@ -157,8 +183,11 @@ namespace WoWJunction
                 return result;
             }
 
+            // 保存合并后的 _classic_ 目录
+            outWoWConfig.folders.wow_classic_path = PathUtils.CombinePath(wowRootDirName, wowClassicPath);
+
             // wow_classic_path_cn: 值为相对路径时, 必须以"\"开头, 该相对路径或绝对路径必须存在.
-            string wowClassicPathCN = txtBoxWoWClassicPathCN.Text.Trim();
+            string wowClassicPathCN = txtBoxWoWClassicPathCN.Text;
             if (PathUtils.IsRelativePath(wowClassicPathCN)) {
                 if (!(wowClassicPathCN.StartsWith("\\") | wowClassicPathCN.StartsWith("/"))) {
                     result.err_no = ERR_WOW_CLASSIC_CN_PATH_MUST_START_WITH_PATH_SEPARATOR;
@@ -176,8 +205,11 @@ namespace WoWJunction
                 return result;
             }
 
+            // 保存合并后的 _classic_cn 目录
+            outWoWConfig.folders.wow_classic_path_cn = wowClassicPathCN;
+
             // wow_classic_path_cn: 值为相对路径时, 必须以"\"开头, 该相对路径或绝对路径必须存在.
-            string wowClassicPathTW = txtBoxWoWClassicPathTW.Text.Trim();
+            string wowClassicPathTW = txtBoxWoWClassicPathTW.Text;
             if (PathUtils.IsRelativePath(wowClassicPathTW)) {
                 if (!(wowClassicPathTW.StartsWith("\\") | wowClassicPathTW.StartsWith("/"))) {
                     result.err_no = ERR_WOW_CLASSIC_TW_PATH_MUST_START_WITH_PATH_SEPARATOR;
@@ -195,6 +227,9 @@ namespace WoWJunction
                 result.success = false;
                 return result;
             }
+
+            // 保存合并后的 _classic_tw 目录
+            outWoWConfig.folders.wow_classic_path_tw = wowClassicPathTW;
 
             result.success = true;
             return result;
@@ -234,7 +269,8 @@ namespace WoWJunction
             }
             //*/
 
-            var openFolderDialog = new Utils.FolderSelectDialog {
+            var openFolderDialog = new Utils.FolderSelectDialog
+            {
                 Title = "请选择《魔兽世界》根目录的路径：",
                 InitialDirectory = Environment.CurrentDirectory
             };
@@ -272,10 +308,16 @@ namespace WoWJunction
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            ValidateResult result = ValidateUIData();
+            WoWConfig outWoWConfig = new WoWConfig();
+            ValidateResult result = ValidateUIData(outWoWConfig);
             if (!result.success) {
                 string message = FormatValidateError(result.err_no);
                 MessageBox.Show(message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                UIDataExchange();
+                wowConfig = outWoWConfig;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
         }
     }

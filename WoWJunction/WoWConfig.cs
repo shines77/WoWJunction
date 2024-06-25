@@ -26,7 +26,7 @@ namespace WoWJunction
 
             public Folders()
             {
-                wow_root_path = @"C:\Blizzard\World of Warcraft";
+                wow_root_path = "";
                 wow_classic_path = DefaultWoWClassicPath;
                 wow_classic_path_cn = DefaultWoWClassicPathCN;
                 wow_classic_path_tw = DefaultWoWClassicPathTW;

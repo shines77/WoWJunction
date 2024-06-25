@@ -30,6 +30,11 @@ namespace WoWJunction
 
         public WoWConfig GetWoWConfig()
         {
+            return wowConfig;
+        }
+
+        public WoWConfig GetWoWConfigFromFile()
+        {
             return wowConfigFromFile;
         }
 
@@ -148,7 +153,11 @@ namespace WoWJunction
         private void btnSettings_Click(object sender, EventArgs e)
         {
             FormSettings frmSettings = new FormSettings(this);
-            frmSettings.ShowDialog();
+            DialogResult result = frmSettings.ShowDialog();
+            if (result == DialogResult.OK) {
+                wowConfig = frmSettings.GetWoWConfig();
+                wowConfigFromFile = frmSettings.GetWoWConfigToFile();
+            }
         }
     }
 }
