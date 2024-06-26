@@ -1,9 +1,11 @@
 # WoWJunction
 
 #### Description
-魔兽世界怀旧服(国服/亚服)目录切换器
+
+魔兽世界怀旧服(国服/亚服)切换器
 
 #### Software Architecture
+
 Software architecture description
 
 #### Installation
@@ -24,7 +26,6 @@ Software architecture description
 2.  Create Feat_xxx branch
 3.  Commit your code
 4.  Create Pull Request
-
 
 #### Gitee Feature
 
