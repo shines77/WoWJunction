@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.btnOpenSettings = new System.Windows.Forms.Button();
             this.lblCurrentStatus = new System.Windows.Forms.Label();
@@ -45,6 +46,14 @@
             this.btnUnmount = new System.Windows.Forms.Button();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.chkBoxMinimizeToTaskbarWhenExiting = new System.Windows.Forms.CheckBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStripTaskBar = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemShowMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHideMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripTaskBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenSettings
@@ -213,11 +222,67 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // chkBoxMinimizeToTaskbarWhenExiting
+            // 
+            this.chkBoxMinimizeToTaskbarWhenExiting.AutoSize = true;
+            this.chkBoxMinimizeToTaskbarWhenExiting.Location = new System.Drawing.Point(130, 422);
+            this.chkBoxMinimizeToTaskbarWhenExiting.Name = "chkBoxMinimizeToTaskbarWhenExiting";
+            this.chkBoxMinimizeToTaskbarWhenExiting.Size = new System.Drawing.Size(156, 17);
+            this.chkBoxMinimizeToTaskbarWhenExiting.TabIndex = 17;
+            this.chkBoxMinimizeToTaskbarWhenExiting.Text = "关闭时最小化到任务栏";
+            this.chkBoxMinimizeToTaskbarWhenExiting.UseVisualStyleBackColor = true;
+            this.chkBoxMinimizeToTaskbarWhenExiting.CheckedChanged += new System.EventHandler(this.chkBoxMinimizeToTaskbarWhenExiting_CheckedChanged);
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStripTaskBar;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "WoWJunction";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
+            // contextMenuStripTaskBar
+            // 
+            this.contextMenuStripTaskBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemShowMain,
+            this.toolStripMenuItemHideMain,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemExit});
+            this.contextMenuStripTaskBar.Name = "contextMenuStripTaskBar";
+            this.contextMenuStripTaskBar.Size = new System.Drawing.Size(154, 98);
+            // 
+            // toolStripMenuItemShowMain
+            // 
+            this.toolStripMenuItemShowMain.Name = "toolStripMenuItemShowMain";
+            this.toolStripMenuItemShowMain.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItemShowMain.Text = "显示主窗口(&S)";
+            this.toolStripMenuItemShowMain.Click += new System.EventHandler(this.toolStripMenuItemShowMain_Click);
+            // 
+            // toolStripMenuItemHideMain
+            // 
+            this.toolStripMenuItemHideMain.Name = "toolStripMenuItemHideMain";
+            this.toolStripMenuItemHideMain.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItemHideMain.Text = "隐藏主窗口(&H)";
+            this.toolStripMenuItemHideMain.Click += new System.EventHandler(this.toolStripMenuItemHideMain_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(150, 6);
+            // 
+            // toolStripMenuItemExit
+            // 
+            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItemExit.Text = "退出(&E)";
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 419);
+            this.ClientSize = new System.Drawing.Size(419, 452);
+            this.Controls.Add(this.chkBoxMinimizeToTaskbarWhenExiting);
             this.Controls.Add(this.lblCurrentStatus);
             this.Controls.Add(this.lnkLinkToTarget);
             this.Controls.Add(this.lblLinkTo);
@@ -245,6 +310,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
+            this.contextMenuStripTaskBar.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,7 +335,13 @@
         private System.Windows.Forms.Button btnUnmount;
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnExit;
-
+        private System.Windows.Forms.CheckBox chkBoxMinimizeToTaskbarWhenExiting;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripTaskBar;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowMain;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideMain;
     }
 }
 

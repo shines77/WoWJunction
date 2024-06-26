@@ -36,9 +36,13 @@ namespace WoWJunction
         [XmlElement("folders")]
         public Folders folders { get; set; }
 
+        [XmlElement("minimize_to_taskbar_when_exiting")]
+        public bool minimize_to_taskbar_when_exiting { get; set; }
+
         public WoWConfig()
         {
             folders = new Folders();
+            minimize_to_taskbar_when_exiting = false;
         }
 
         public WoWConfig TrimConfig()

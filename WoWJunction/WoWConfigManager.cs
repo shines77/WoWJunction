@@ -93,6 +93,8 @@ namespace WoWJunction
             result.success = false;
             result.err_no = ERR_SUCCESS;
 
+            outWoWConfig.minimize_to_taskbar_when_exiting = inWoWConfig.minimize_to_taskbar_when_exiting;
+
             // wow_root_path: 必须是一个绝对路径, 且必须是一个目录, 且必须存在.
             string wowRootPath = inWoWConfig.folders.wow_root_path;
             wowRootPath.Trim();

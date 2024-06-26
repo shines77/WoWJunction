@@ -30,8 +30,14 @@ namespace WoWJunction
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         public static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
 
+        [DllImport("user32.dll", EntryPoint = "ShowWindow")]
+        public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
+
         public const int WM_SYSCOMMAND = 0x112;
         public const int SC_RESTORE = 0xF120;
+        public const int WM_SHOWWINDOW = 0x0018;
+        public const int SW_SHOWNORMAL = 1;
+        public const int SW_SHOW = 5;
 
 #if !RUN_ONCE
 #if SAME_FILE_RUN_ONCE
@@ -58,6 +64,8 @@ namespace WoWJunction
                     MessageBox.Show("本程序只能启动一个实例, 请勿重复启动 !", "警告...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     SetForegroundWindow(process.MainWindowHandle);
                     SendMessage(process.MainWindowHandle, WM_SYSCOMMAND, SC_RESTORE, 0);
+                    ShowWindow(process.MainWindowHandle, SW_SHOWNORMAL);
+                    //SendMessage(process.MainWindowHandle, WM_SHOWWINDOW, 1, 0);
                     return;
                 }
 #else

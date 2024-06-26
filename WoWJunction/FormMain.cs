@@ -28,6 +28,8 @@ namespace WoWJunction
         private const string XML_CONFIG_FILENAME = "WoWJunction.exe.config.xml";
         private const string XML_CONFIG_ROOT = ""; // "configuration";
 
+        private volatile bool formUIInitialized = false;
+        private volatile bool formForcedClosing = false;
         private XmlFileStatus xmlConfigFileStatus = XmlFileStatus.Unknown;
         private ValidateResult xmlValidateResult = new ValidateResult();
         private volatile bool hasMountException = true;
@@ -66,6 +68,8 @@ namespace WoWJunction
         {
             UpdateMountStatus();
 
+            UpdateMinimizeToTaskbarWhenExiting();
+
             if (xmlConfigFileStatus == XmlFileStatus.OK) {
                 if (!xmlValidateResult.success && xmlValidateResult.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY) {
                     MessageBox.Show(this, "您尚未设置《魔兽世界》的相关路径！", FORM_CAPTION,
@@ -80,13 +84,40 @@ namespace WoWJunction
                 //MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
                 //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            formUIInitialized = true;
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!formForcedClosing) {
+                if (wowConfig.minimize_to_taskbar_when_exiting) {
+                    // 窗体关闭原因为: 单击" 关闭" 按钮 或 Alt+F4
+                    if (e.CloseReason == CloseReason.UserClosing) {
+                        e.Cancel = true;
+
+                        this.WindowState = FormWindowState.Minimized;
+                        notifyIcon.Visible = true;
+                        this.Hide();
+                        return;
+                    }
+                }
+            }
+
             if (xmlConfigFileStatus == XmlFileStatus.FileNotExist) {
                 SaveConfigToXml();
             }
+        }
+
+        private void UpdateMinimizeToTaskbarWhenExiting()
+        {
+            if (wowConfig.minimize_to_taskbar_when_exiting) {
+                chkBoxMinimizeToTaskbarWhenExiting.Checked = true;
+            } else {
+                chkBoxMinimizeToTaskbarWhenExiting.Checked = false;
+            }
+
+            notifyIcon.Visible = wowConfig.minimize_to_taskbar_when_exiting;
         }
 
         private void UpdateMountStatus()
@@ -418,6 +449,51 @@ namespace WoWJunction
             // 屏蔽任何按键, ReadOnly
             e.Handled = true;
             e.SuppressKeyPress = true;
+        }
+
+        private void chkBoxMinimizeToTaskbarWhenExiting_CheckedChanged(object sender, EventArgs e)
+        {
+            if (formUIInitialized) {
+                bool _checked = chkBoxMinimizeToTaskbarWhenExiting.Checked;
+                wowConfig.minimize_to_taskbar_when_exiting = _checked;
+                wowConfigFromFile.minimize_to_taskbar_when_exiting = _checked;
+
+                notifyIcon.Visible = _checked;
+
+                SaveConfigToXml();
+            }
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+                this.Activate();
+            }
+        }
+
+        private void toolStripMenuItemShowMain_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            this.Activate();
+        }
+
+        private void toolStripMenuItemHideMain_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.Hide();
+        }
+
+        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
+        {
+            notifyIcon.Visible = false;
+            formForcedClosing = true;
+            this.Close();
+            this.Dispose();
+
+            Application.Exit();
         }
     }
 }
