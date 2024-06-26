@@ -118,41 +118,12 @@ namespace WoWJunction
             return wowInstallPath;
         }
 
-        private string ExtractWoWRootPath(string path)
-        {
-            string[] WoWSubPath = new string[]
-            {
-                "_classic_",
-                "_classic_era_",
-                "_retail_",
-                "_classic_ptr_",
-                "_ptr_",
-            };
-
-            string wowRootPath = "";
-            string wowPath = path.Trim();
-            if (!Directory.Exists(wowPath)) {
-                wowPath = Path.GetDirectoryName(wowPath);
-            }
-            wowPath = PathUtils.NormalizeFullPath(wowPath);
-
-            foreach (string subPath in WoWSubPath) {
-                if (!string.IsNullOrEmpty(subPath)) {
-                    if (wowPath.EndsWith(subPath) && (wowPath.Length >= (subPath.Length + 1))) {
-                        wowRootPath = wowPath.Substring(0, wowPath.Length - (subPath.Length + 1));
-                        break;
-                    }
-                }
-            }
-            return wowRootPath;
-        }
-
         private string ScanWoWRootPathFromRegistry()
         {
             string wowRootPath = "";
             string wowInstallPath = ReadInstallPathFromRegistry();
             if (!String.IsNullOrEmpty(wowInstallPath)) {
-                wowRootPath = ExtractWoWRootPath(wowInstallPath);
+                wowRootPath = PathUtils.ExtractWoWRootPath(wowInstallPath);
             }
             return wowRootPath;
         }
