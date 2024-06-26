@@ -156,6 +156,22 @@ namespace WoWJunction
             return path;
         }
 
+        public static string FindLastFolder(string path)
+        {
+            char[] DirectorySeparators = new char[] { '\\', '/' };
+            string lastFolder = "";
+
+            // Remove the end of '\\' or '/' char
+            path = NormalizeFullPath(path);
+
+            // Find the first position of lastIndexOf('\\' or '/')
+            int last = path.LastIndexOfAny(DirectorySeparators);
+            if (last != -1) {
+                lastFolder = path.Substring(last, path.Length - last);
+            }
+            return lastFolder;
+        }
+
         public static string ExtractWoWRootPath(string path)
         {
             string[] WoWSubPath = new string[]

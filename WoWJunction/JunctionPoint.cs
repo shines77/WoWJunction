@@ -427,7 +427,7 @@ namespace WoWJunction
 
             using (SafeFileHandle handle = OpenReparsePoint(path, EFileAccess.GenericRead)) {
                 var target = InternalGetTarget(handle);
-                return target != null;
+                return (target != null);
             }
         }
 

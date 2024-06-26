@@ -19,7 +19,7 @@ namespace WoWJunction
         enum XmlFileStatus : int
         {
             Unknown,
-            FileIsNotExists,
+            FileNotExist,
             OK,
             Error
         };
@@ -34,9 +34,14 @@ namespace WoWJunction
         private WoWConfig wowConfig = new WoWConfig();
         private WoWConfig wowConfigFromFile = new WoWConfig();
 
+        private SymLinkChecker symLinkChecker = null; 
+
         public FormMain()
         {
             InitializeComponent();
+            if (symLinkChecker == null) {
+                symLinkChecker = new SymLinkChecker(this);
+            }
         }
 
         public WoWConfig GetWoWConfig()
@@ -51,13 +56,15 @@ namespace WoWJunction
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            ReadConfigFromXml();
+            bool readOK = ReadConfigFromXml();
+
+            // 检查当前的绑定状态
+            symLinkChecker.CheckSymLink(wowConfig.folders.wow_classic_path);
         }
 
         private void frmMain_Shown(object sender, EventArgs e)
         {
-            txtBoxMountFrom.Text = wowConfig.folders.wow_classic_path;
-            txtBoxMountTo.Text = wowConfig.folders.wow_classic_path_tw;
+            UpdateMountStatus();
 
             if (xmlConfigFileStatus == XmlFileStatus.OK) {
                 if (!xmlValidateResult.success && xmlValidateResult.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY) {
@@ -69,7 +76,7 @@ namespace WoWJunction
                 MessageBox.Show(this, "您的配置文件有错误，请重新配置《魔兽世界》的相关路径！", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (xmlConfigFileStatus == XmlFileStatus.FileIsNotExists) {
+            else if (xmlConfigFileStatus == XmlFileStatus.FileNotExist) {
                 //MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
                 //    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -77,8 +84,96 @@ namespace WoWJunction
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (xmlConfigFileStatus == XmlFileStatus.FileIsNotExists) {
+            if (xmlConfigFileStatus == XmlFileStatus.FileNotExist) {
                 SaveConfigToXml();
+            }
+        }
+
+        private void UpdateMountStatus()
+        {
+            // 检查当前的绑定状态
+            symLinkChecker.CheckSymLink(wowConfig.folders.wow_classic_path);
+
+            UpdateMountLinkStatus();
+            UpdateMountLinkDetailStatus();
+            UpdateWoWVersion();
+            UpdateSwitchToStatus();
+        }
+
+        private void UpdateMountLinkStatus()
+        {
+            string linkToPath = symLinkChecker.GetLinkToPath();
+            LinkStatus linkStatus = symLinkChecker.GetLinkStatus();
+
+            if (linkToPath != null && linkStatus == LinkStatus.Linked) {
+                lnkLinkToSource.Text = symLinkChecker.GetSourceName();
+                lnkLinkToTarget.Text = symLinkChecker.GetTargetName();
+            }
+            else {
+                lnkLinkToSource.Text = symLinkChecker.GetSourceName();
+                lnkLinkToTarget.LinkColor = Color.Red;
+                lnkLinkToTarget.ActiveLinkColor = Color.Orange;
+                lnkLinkToTarget.Text = symLinkChecker.GetSimpleLinkErrorInfo();
+            }
+
+            const int paddingX = 6;
+            int sourceWidth = lnkLinkToSource.Width;
+            int linkToWidth = lblLinkTo.Width;
+
+            lnkLinkToSource.Left = lblLinkTo.Left - sourceWidth - paddingX;
+            lnkLinkToTarget.Left = lblLinkTo.Right + paddingX;
+        }
+
+        private void UpdateMountLinkDetailStatus()
+        {
+            string linkToPath = symLinkChecker.GetLinkToPath();
+            LinkStatus linkStatus = symLinkChecker.GetLinkStatus();
+
+            txtBoxMountFrom.Text = wowConfig.folders.wow_classic_path;
+            if (linkToPath != null && linkStatus == LinkStatus.Linked) {
+                txtBoxMountTo.Text = linkToPath;
+            }
+            else {
+                txtBoxMountTo.Text = symLinkChecker.GetLinkErrorInfo();
+            }
+        }
+
+        private void UpdateWoWVersion()
+        {
+            //
+        }
+
+        public SwitchStatus CheckSwitchStatus(string linkToPath)
+        {
+            SwitchStatus switchStatus = SwitchStatus.Error;
+            linkToPath.Trim();
+            if (!String.IsNullOrEmpty(linkToPath)) {
+                if (linkToPath == wowConfig.folders.wow_classic_path_cn)
+                    switchStatus = SwitchStatus.SwitchToCN;
+                else if (linkToPath == wowConfig.folders.wow_classic_path_tw)
+                    switchStatus = SwitchStatus.SwitchToTW;
+                else
+                    switchStatus = SwitchStatus.Unknown;
+            }
+            return switchStatus;
+        }
+
+        private void UpdateSwitchToStatus()
+        {
+            SwitchStatus switchStatus = symLinkChecker.GetSwitchStatus();
+            if (switchStatus == SwitchStatus.SwitchToCN) {
+                tdBtnSwitchToCN.Visible = true;
+                tdBtnSwitchToTW.Visible = false;
+                btnSwitchToCN.Focus();
+            }
+            else if (switchStatus == SwitchStatus.SwitchToTW) {
+                tdBtnSwitchToCN.Visible = false;
+                tdBtnSwitchToTW.Visible = true;
+                btnSwitchToTW.Focus();
+            }
+            else {
+                tdBtnSwitchToCN.Visible = false;
+                tdBtnSwitchToTW.Visible = false;
             }
         }
 
@@ -130,6 +225,7 @@ namespace WoWJunction
 
         public bool ReadConfigFromXml()
         {
+            bool readSuccess = false;
             xmlConfigFileStatus = XmlFileStatus.Unknown;
             string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
             string xmlFile = Path.Combine(strAppPath, XML_CONFIG_FILENAME);
@@ -161,7 +257,7 @@ namespace WoWJunction
                             }
                         }
                         xmlValidateResult = result;
-                        return true;
+                        readSuccess = true;
                     }
                 }
                 catch (Exception ex) {
@@ -169,7 +265,7 @@ namespace WoWJunction
                 }
             }
             else {
-                xmlConfigFileStatus = XmlFileStatus.FileIsNotExists;
+                xmlConfigFileStatus = XmlFileStatus.FileNotExist;
                 string wowRootPath = ScanWoWRootPathFromRegistry();
                 if (!String.IsNullOrEmpty(wowRootPath) && Directory.Exists(wowRootPath)) {
                     wowConfigFromFile.folders.wow_root_path = wowRootPath.Trim();
@@ -178,6 +274,7 @@ namespace WoWJunction
                     if (result.success && result.err_no == 0) {
                         wowConfig = outWoWConfig;
                         SaveConfigToXml();
+                        readSuccess = true;
                         MessageBox.Show(this, $"您是第一次运行该程序，检测到《魔兽世界》的主目录为: \n“{wowRootPath}”,\n\n如果不正确，请重新设置！",
                             FORM_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -188,7 +285,7 @@ namespace WoWJunction
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            return false;
+            return readSuccess;
         }
 
         public void SaveConfigToXml()
@@ -199,13 +296,14 @@ namespace WoWJunction
             xmlConfigFileStatus = XmlFileStatus.OK;
         }
 
-        private void MountJunctionPoint(string junctionPoint, string targetDirectory, bool overwrite = true)
+        private void MountJunctionPoint(string junctionPoint, string targetDirectory,
+            SwitchStatus switchStatus, bool overwrite = true)
         {
             string targetVolume = Path.GetPathRoot(targetDirectory);
 
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (!result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", FORM_CAPTION,
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point，游戏必须安装在 NTFS 格式的磁盘!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else {
@@ -230,38 +328,22 @@ namespace WoWJunction
                 hasMountException = false;
 #endif
                 if (!hasMountException) {
-                    MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", FORM_CAPTION,
+                    //MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", FORM_CAPTION,
+                    //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string areaName = "";
+                    if (switchStatus == SwitchStatus.SwitchToCN) {
+                        areaName = "（国服）";
+                    }
+                    else if (switchStatus == SwitchStatus.SwitchToTW) {
+                        areaName = "（亚服）";
+                    }
+                    else {
+                        areaName = "（未知）";
+                    }
+                    MessageBox.Show(this, $"已成功切换至魔兽世界怀旧服{areaName}！", FORM_CAPTION,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
-
-        private void UpdateMountStatus()
-        {
-            UpdateMountLinkStatus();
-            UpdateMountLinkDetailStatus();
-            UpdateWoWVersion();
-            UpdateSwitchToStatus();
-        }
-
-        private void UpdateMountLinkStatus()
-        {
-            //
-        }
-
-        private void UpdateMountLinkDetailStatus()
-        {
-            //
-        }
-
-        private void UpdateWoWVersion()
-        {
-            //
-        }
-
-        private void UpdateSwitchToStatus()
-        {
-            //
         }
 
         private void btnOpenSettings_Click(object sender, EventArgs e)
@@ -276,12 +358,21 @@ namespace WoWJunction
             }
         }
 
+        private void btnRefreshStatus_Click(object sender, EventArgs e)
+        {
+            // 刷新当前状态
+            UpdateMountStatus();
+        }
+
         private void btnSwitchToCN_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
 
-            MountJunctionPoint(junctionPoint, targetDirectory, true);
+            MountJunctionPoint(junctionPoint, targetDirectory, SwitchStatus.SwitchToCN, true);
+
+            // 刷新当前状态
+            UpdateMountStatus();
         }
 
         private void btnSwitchToTW_Click(object sender, EventArgs e)
@@ -289,7 +380,10 @@ namespace WoWJunction
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";
 
-            MountJunctionPoint(junctionPoint, targetDirectory, true);
+            MountJunctionPoint(junctionPoint, targetDirectory, SwitchStatus.SwitchToTW, true);
+
+            // 刷新当前状态
+            UpdateMountStatus();
         }
 
         private void btnCheck_Click(object sender, EventArgs e)

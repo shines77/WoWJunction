@@ -44,13 +44,6 @@ namespace WoWJunction
             return wowConfigToFile;
         }
 
-        private void RestoreToDefaultValue()
-        {
-            txtBoxWoWClassicPath.Text = WoWConfig.DefaultWoWClassicPath;
-            txtBoxWoWClassicPathCN.Text = WoWConfig.DefaultWoWClassicPathCN;
-            txtBoxWoWClassicPathTW.Text = WoWConfig.DefaultWoWClassicPathTW;
-        }
-
         private void LoadUIData()
         {
             txtBoxWoWRootPath.Text = wowConfigToFile.folders.wow_root_path;
@@ -88,6 +81,25 @@ namespace WoWJunction
             if (wowConfigToFile.folders.wow_classic_path_tw != txtBoxWoWClassicPathTW.Text)
                 return true;
             return changed;
+        }
+
+        private bool IsDefaultValue()
+        {
+            bool isDefault = true;
+            if (txtBoxWoWClassicPath.Text != WoWConfig.DefaultWoWClassicPath)
+                return false;
+            if (txtBoxWoWClassicPathCN.Text != WoWConfig.DefaultWoWClassicPathCN)
+                return false;
+            if (txtBoxWoWClassicPathTW.Text != WoWConfig.DefaultWoWClassicPathTW)
+                return false;
+            return isDefault;
+        }
+
+        private void RestoreToDefaultValue()
+        {
+            txtBoxWoWClassicPath.Text = WoWConfig.DefaultWoWClassicPath;
+            txtBoxWoWClassicPathCN.Text = WoWConfig.DefaultWoWClassicPathCN;
+            txtBoxWoWClassicPathTW.Text = WoWConfig.DefaultWoWClassicPathTW;
         }
 
         private ValidateResult ValidateUIData(WoWConfig outWoWConfig)
@@ -238,7 +250,13 @@ namespace WoWJunction
 
         private void btnDefaultValue_Click(object sender, EventArgs e)
         {
-            RestoreToDefaultValue();
+            if (IsDefaultValue()) {
+                MessageBox.Show("已经是默认值，不需要更改。", "信息...",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else {
+                RestoreToDefaultValue();
+            }
         }
 
         private void btnApply_Click(object sender, EventArgs e)
@@ -256,7 +274,8 @@ namespace WoWJunction
         {
             TrimUIData();
             if (HasAnyConfigChanged()) {
-                var result = MessageBox.Show("设置已发生改变，是否要保存当前设置？", "提示...", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var result = MessageBox.Show("设置已发生改变，是否要保存当前设置？", "提示...",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes) {
                     ApplyCurrentSettings();
                     return;
