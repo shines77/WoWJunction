@@ -405,5 +405,19 @@ namespace WoWJunction
         {
             this.Close();
         }
+
+        private void txtBoxMountTo_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 屏蔽任何按键, ReadOnly
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+        }
+
+        private void txtBoxMountFrom_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 屏蔽任何按键, ReadOnly
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+        }
     }
 }

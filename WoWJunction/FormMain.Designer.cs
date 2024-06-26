@@ -46,9 +46,9 @@
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            //
+            // 
             // btnOpenSettings
-            //
+            // 
             this.btnOpenSettings.Location = new System.Drawing.Point(299, 9);
             this.btnOpenSettings.Name = "btnOpenSettings";
             this.btnOpenSettings.Size = new System.Drawing.Size(102, 31);
@@ -56,18 +56,18 @@
             this.btnOpenSettings.Text = "WoW 路径设置";
             this.btnOpenSettings.UseVisualStyleBackColor = true;
             this.btnOpenSettings.Click += new System.EventHandler(this.btnOpenSettings_Click);
-            //
+            // 
             // lblCurrentStatus
-            //
+            // 
             this.lblCurrentStatus.AutoSize = true;
             this.lblCurrentStatus.Location = new System.Drawing.Point(174, 21);
             this.lblCurrentStatus.Name = "lblCurrentStatus";
             this.lblCurrentStatus.Size = new System.Drawing.Size(72, 13);
             this.lblCurrentStatus.TabIndex = 1;
             this.lblCurrentStatus.Text = "当前状态：";
-            //
+            // 
             // lnkLinkToSource
-            //
+            // 
             this.lnkLinkToSource.AutoSize = true;
             this.lnkLinkToSource.Location = new System.Drawing.Point(109, 43);
             this.lnkLinkToSource.Name = "lnkLinkToSource";
@@ -75,9 +75,9 @@
             this.lnkLinkToSource.TabIndex = 2;
             this.lnkLinkToSource.TabStop = true;
             this.lnkLinkToSource.Text = "\\_classic_";
-            //
+            // 
             // lblLinkTo
-            //
+            // 
             this.lblLinkTo.AutoSize = true;
             this.lblLinkTo.ForeColor = System.Drawing.Color.Red;
             this.lblLinkTo.Location = new System.Drawing.Point(192, 43);
@@ -85,9 +85,9 @@
             this.lblLinkTo.Size = new System.Drawing.Size(28, 13);
             this.lblLinkTo.TabIndex = 3;
             this.lblLinkTo.Text = "==>";
-            //
+            // 
             // lnkLinkToTarget
-            //
+            // 
             this.lnkLinkToTarget.AutoSize = true;
             this.lnkLinkToTarget.Location = new System.Drawing.Point(226, 43);
             this.lnkLinkToTarget.Name = "lnkLinkToTarget";
@@ -95,25 +95,26 @@
             this.lnkLinkToTarget.TabIndex = 4;
             this.lnkLinkToTarget.TabStop = true;
             this.lnkLinkToTarget.Text = "\\classic_cn";
-            //
+            // 
             // lblWoWClassicPathTip
-            //
+            // 
             this.lblWoWClassicPathTip.AutoSize = true;
             this.lblWoWClassicPathTip.Location = new System.Drawing.Point(18, 72);
             this.lblWoWClassicPathTip.Name = "lblWoWClassicPathTip";
             this.lblWoWClassicPathTip.Size = new System.Drawing.Size(137, 13);
             this.lblWoWClassicPathTip.TabIndex = 5;
             this.lblWoWClassicPathTip.Text = "《魔兽世界》怀旧服：";
-            //
+            // 
             // txtBoxMountFrom
-            //
+            // 
             this.txtBoxMountFrom.Location = new System.Drawing.Point(21, 92);
             this.txtBoxMountFrom.Name = "txtBoxMountFrom";
             this.txtBoxMountFrom.Size = new System.Drawing.Size(380, 22);
             this.txtBoxMountFrom.TabIndex = 6;
-            //
+            this.txtBoxMountFrom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBoxMountFrom_KeyDown);
+            // 
             // lblMountInfo
-            //
+            // 
             this.lblMountInfo.AutoSize = true;
             this.lblMountInfo.ForeColor = System.Drawing.Color.RoyalBlue;
             this.lblMountInfo.Location = new System.Drawing.Point(176, 125);
@@ -121,16 +122,17 @@
             this.lblMountInfo.Size = new System.Drawing.Size(59, 13);
             this.lblMountInfo.TabIndex = 7;
             this.lblMountInfo.Text = "软链接到";
-            //
+            // 
             // txtBoxMountTo
-            //
+            // 
             this.txtBoxMountTo.Location = new System.Drawing.Point(21, 148);
             this.txtBoxMountTo.Name = "txtBoxMountTo";
             this.txtBoxMountTo.Size = new System.Drawing.Size(380, 22);
             this.txtBoxMountTo.TabIndex = 8;
-            //
+            this.txtBoxMountTo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBoxMountTo_KeyDown);
+            // 
             // btnRefreshStatus
-            //
+            // 
             this.btnRefreshStatus.Location = new System.Drawing.Point(130, 190);
             this.btnRefreshStatus.Name = "btnRefreshStatus";
             this.btnRefreshStatus.Size = new System.Drawing.Size(149, 32);
@@ -138,9 +140,9 @@
             this.btnRefreshStatus.Text = "刷新当前状态";
             this.btnRefreshStatus.UseVisualStyleBackColor = true;
             this.btnRefreshStatus.Click += new System.EventHandler(this.btnRefreshStatus_Click);
-            //
+            // 
             // tdBtnSwitchToCN
-            //
+            // 
             this.tdBtnSwitchToCN.AutoSize = true;
             this.tdBtnSwitchToCN.Checked = true;
             this.tdBtnSwitchToCN.Location = new System.Drawing.Point(105, 238);
@@ -150,9 +152,9 @@
             this.tdBtnSwitchToCN.TabStop = true;
             this.tdBtnSwitchToCN.UseVisualStyleBackColor = true;
             this.tdBtnSwitchToCN.Visible = false;
-            //
+            // 
             // btnSwitchToCN
-            //
+            // 
             this.btnSwitchToCN.Location = new System.Drawing.Point(130, 228);
             this.btnSwitchToCN.Name = "btnSwitchToCN";
             this.btnSwitchToCN.Size = new System.Drawing.Size(149, 32);
@@ -160,9 +162,9 @@
             this.btnSwitchToCN.Text = "切换到国服(CN)";
             this.btnSwitchToCN.UseVisualStyleBackColor = true;
             this.btnSwitchToCN.Click += new System.EventHandler(this.btnSwitchToCN_Click);
-            //
+            // 
             // tdBtnSwitchToTW
-            //
+            // 
             this.tdBtnSwitchToTW.AutoSize = true;
             this.tdBtnSwitchToTW.Checked = true;
             this.tdBtnSwitchToTW.Location = new System.Drawing.Point(105, 275);
@@ -171,9 +173,9 @@
             this.tdBtnSwitchToTW.TabIndex = 12;
             this.tdBtnSwitchToTW.TabStop = true;
             this.tdBtnSwitchToTW.UseVisualStyleBackColor = true;
-            //
+            // 
             // btnSwitchToTW
-            //
+            // 
             this.btnSwitchToTW.Location = new System.Drawing.Point(130, 266);
             this.btnSwitchToTW.Name = "btnSwitchToTW";
             this.btnSwitchToTW.Size = new System.Drawing.Size(149, 31);
@@ -181,18 +183,18 @@
             this.btnSwitchToTW.Text = "切换到亚服(TW)";
             this.btnSwitchToTW.UseVisualStyleBackColor = true;
             this.btnSwitchToTW.Click += new System.EventHandler(this.btnSwitchToTW_Click);
-            //
+            // 
             // btnUnmount
-            //
+            // 
             this.btnUnmount.Location = new System.Drawing.Point(130, 303);
             this.btnUnmount.Name = "btnUnmount";
             this.btnUnmount.Size = new System.Drawing.Size(149, 31);
             this.btnUnmount.TabIndex = 14;
             this.btnUnmount.Text = "解除软链接绑定";
             this.btnUnmount.UseVisualStyleBackColor = true;
-            //
+            // 
             // btnCheck
-            //
+            // 
             this.btnCheck.Location = new System.Drawing.Point(130, 340);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(149, 30);
@@ -200,9 +202,9 @@
             this.btnCheck.Text = "检测是否支持软链接";
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
-            //
+            // 
             // btnExit
-            //
+            // 
             this.btnExit.Location = new System.Drawing.Point(130, 376);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(149, 30);
@@ -210,9 +212,9 @@
             this.btnExit.Text = "退 出(&E)";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            //
+            // 
             // FormMain
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 419);
