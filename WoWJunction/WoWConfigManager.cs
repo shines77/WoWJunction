@@ -87,7 +87,7 @@ namespace WoWJunction
             }
         }
 
-        public static ValidateResult ValidateConfig(WoWConfig inWoWConfig, WoWConfig outWoWConfig)
+        public static ValidateResult ValidateConfig(WoWConfig inWoWConfig, WoWConfig outWoWConfig, bool classicPathMustBeExists = true)
         {
             ValidateResult result = new ValidateResult();
             result.success = false;
@@ -175,7 +175,7 @@ namespace WoWJunction
                     wowClassicPathCN = PathUtils.CombinePath(wowRootDirName, wowClassicPathCN);
                 }
             }
-            if (!Directory.Exists(wowClassicPathCN)) {
+            if (classicPathMustBeExists && !Directory.Exists(wowClassicPathCN)) {
                 result.err_no = ERR_WOW_CLASSIC_PATH_CN_NO_EXISTS;
             }
 
@@ -204,7 +204,7 @@ namespace WoWJunction
                     wowClassicPathTW = PathUtils.CombinePath(wowRootDirName, wowClassicPathTW);
                 }
             }
-            if (!Directory.Exists(wowClassicPathTW)) {
+            if (classicPathMustBeExists && !Directory.Exists(wowClassicPathTW)) {
                 result.err_no = ERR_WOW_CLASSIC_PATH_TW_NO_EXISTS;
             }
 

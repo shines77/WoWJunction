@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace WoWJunction
 {
@@ -81,6 +82,81 @@ namespace WoWJunction
             }
         }
 
+        private string ReadInstallPathFromRegistry()
+        {
+            string wowInstallPath = "";
+            try {
+                using (RegistryKey rootKey = Registry.LocalMachine) {
+                    if (rootKey != null) {
+                        using (RegistryKey subKey = rootKey.OpenSubKey(@"Software\WOW6432Node\Blizzard Entertainment\World of Warcraft")) {
+                            if (subKey != null) {
+                                object objInstallPath = subKey.GetValue("InstallPath", "");
+                                if (objInstallPath != null) {
+                                    wowInstallPath = objInstallPath.ToString();
+                                }
+                                subKey.Close();
+                            }
+                        }
+                        if (string.IsNullOrEmpty(wowInstallPath)) {
+                            using (RegistryKey subKey2 = rootKey.OpenSubKey(@"Software\Blizzard Entertainment\World of Warcraft")) {
+                                if (subKey2 != null) {
+                                    object objInstallPath = subKey2.GetValue("InstallPath", "");
+                                    if (objInstallPath != null) {
+                                        wowInstallPath = objInstallPath.ToString();
+                                    }
+                                    subKey2.Close();
+                                }
+                            }
+                        }
+                        rootKey.Close();
+                    }
+                }
+            }
+            catch (Exception ex) {
+                //
+            }
+            return wowInstallPath;
+        }
+
+        private string ExtractWoWRootPath(string path)
+        {
+            string[] WoWSubPath = new string[]
+            {
+                "_classic_",
+                "_classic_era_",
+                "_retail_",
+                "_classic_ptr_",
+                "_ptr_",
+            };
+
+            string wowRootPath = "";
+            string wowPath = path.Trim();
+            if (!Directory.Exists(wowPath)) {
+                wowPath = Path.GetDirectoryName(wowPath);
+            }
+            wowPath = PathUtils.NormalizeFullPath(wowPath);
+
+            foreach (string subPath in WoWSubPath) {
+                if (!string.IsNullOrEmpty(subPath)) {
+                    if (wowPath.EndsWith(subPath) && (wowPath.Length >= (subPath.Length + 1))) {
+                        wowRootPath = wowPath.Substring(0, wowPath.Length - (subPath.Length + 1));
+                        break;
+                    }
+                }
+            }
+            return wowRootPath;
+        }
+
+        private string ScanWoWRootPathFromRegistry()
+        {
+            string wowRootPath = "";
+            string wowInstallPath = ReadInstallPathFromRegistry();
+            if (!String.IsNullOrEmpty(wowInstallPath)) {
+                wowRootPath = ExtractWoWRootPath(wowInstallPath);
+            }
+            return wowRootPath;
+        }
+
         public bool ReadConfigFromXml()
         {
             xmlConfigFileStatus = XmlFileStatus.Unknown;
@@ -97,10 +173,21 @@ namespace WoWJunction
                         xmlConfigFileStatus = XmlFileStatus.OK;
 
                         WoWConfig outWoWConfig = new WoWConfig();
-                        var result = WoWConfigManager.ValidateConfig(xmlWoWConfig, outWoWConfig);
-                        if (( result.success && result.err_no == 0) ||
-                            (!result.success && result.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY)) {
+                        var result = WoWConfigManager.ValidateConfig(xmlWoWConfig, outWoWConfig, false);
+                        if (result.success && result.err_no == 0) {
                             wowConfig = outWoWConfig;
+                        }
+                        else if (!result.success && result.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY) {
+                            wowConfig = outWoWConfig;
+                            string wowRootPath = ScanWoWRootPathFromRegistry();
+                            if (!String.IsNullOrEmpty(wowRootPath) && Directory.Exists(wowRootPath)) {
+                                wowConfigFromFile.folders.wow_root_path = wowRootPath.Trim();
+                                result = WoWConfigManager.ValidateConfig(wowConfigFromFile, outWoWConfig, false);
+                                if (result.success && result.err_no == 0) {
+                                    wowConfig = outWoWConfig;
+                                    SaveConfigToXml();
+                                }
+                            }
                         }
                         xmlValidateResult = result;
                         return true;
@@ -112,8 +199,23 @@ namespace WoWJunction
             }
             else {
                 xmlConfigFileStatus = XmlFileStatus.FileIsNotExists;
-                MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string wowRootPath = ScanWoWRootPathFromRegistry();
+                if (!String.IsNullOrEmpty(wowRootPath) && Directory.Exists(wowRootPath)) {
+                    wowConfigFromFile.folders.wow_root_path = wowRootPath.Trim();
+                    WoWConfig outWoWConfig = new WoWConfig();
+                    var result = WoWConfigManager.ValidateConfig(wowConfigFromFile, outWoWConfig, false);
+                    if (result.success && result.err_no == 0) {
+                        wowConfig = outWoWConfig;
+                        SaveConfigToXml();
+                        MessageBox.Show(this, $"您是第一次运行该程序，检测到《魔兽世界》的主目录为: \n“{wowRootPath}”,\n\n如果不正确，请重新设置！",
+                            FORM_CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    xmlValidateResult = result;
+                }
+                else {
+                    MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             return false;
         }
