@@ -41,8 +41,9 @@
             this.lblMountInfo = new System.Windows.Forms.Label();
             this.btnUnmount = new System.Windows.Forms.Button();
             this.lblWoWClassicPathTip = new System.Windows.Forms.Label();
-            this.txtBoxWoWClassicWoWCN = new System.Windows.Forms.TextBox();
-            this.txtBoxWoWClassicWoWTW = new System.Windows.Forms.TextBox();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.tdBtnSwitchToCN = new System.Windows.Forms.RadioButton();
+            this.tdBtnSwitchToTW = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // btnMountToCN
@@ -102,7 +103,7 @@
             this.lnkMountFrom.Size = new System.Drawing.Size(63, 13);
             this.lnkMountFrom.TabIndex = 5;
             this.lnkMountFrom.TabStop = true;
-            this.lnkMountFrom.Text = "/classic";
+            this.lnkMountFrom.Text = "\\classic";
             // 
             // lblLinkTo
             // 
@@ -122,7 +123,7 @@
             this.lnkMountTo.Size = new System.Drawing.Size(84, 13);
             this.lnkMountTo.TabIndex = 7;
             this.lnkMountTo.TabStop = true;
-            this.lnkMountTo.Text = "/classic_cn";
+            this.lnkMountTo.Text = "\\classic_cn";
             // 
             // txtBoxMountFrom
             // 
@@ -166,29 +167,47 @@
             this.lblWoWClassicPathTip.TabIndex = 12;
             this.lblWoWClassicPathTip.Text = "《魔兽世界》怀旧服：";
             // 
-            // txtBoxWoWClassicWoWCN
+            // btnExit
             // 
-            this.txtBoxWoWClassicWoWCN.Location = new System.Drawing.Point(287, 200);
-            this.txtBoxWoWClassicWoWCN.Name = "txtBoxWoWClassicWoWCN";
-            this.txtBoxWoWClassicWoWCN.Size = new System.Drawing.Size(114, 22);
-            this.txtBoxWoWClassicWoWCN.TabIndex = 13;
-            this.txtBoxWoWClassicWoWCN.Text = "\\_classic_cn";
+            this.btnExit.Location = new System.Drawing.Point(141, 342);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(129, 30);
+            this.btnExit.TabIndex = 13;
+            this.btnExit.Text = "退 出(&E)";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // txtBoxWoWClassicWoWTW
+            // tdBtnSwitchToCN
             // 
-            this.txtBoxWoWClassicWoWTW.Location = new System.Drawing.Point(287, 237);
-            this.txtBoxWoWClassicWoWTW.Name = "txtBoxWoWClassicWoWTW";
-            this.txtBoxWoWClassicWoWTW.Size = new System.Drawing.Size(114, 22);
-            this.txtBoxWoWClassicWoWTW.TabIndex = 14;
-            this.txtBoxWoWClassicWoWTW.Text = "\\_classic_tw";
+            this.tdBtnSwitchToCN.AutoSize = true;
+            this.tdBtnSwitchToCN.Checked = true;
+            this.tdBtnSwitchToCN.Location = new System.Drawing.Point(111, 204);
+            this.tdBtnSwitchToCN.Name = "tdBtnSwitchToCN";
+            this.tdBtnSwitchToCN.Size = new System.Drawing.Size(14, 13);
+            this.tdBtnSwitchToCN.TabIndex = 14;
+            this.tdBtnSwitchToCN.TabStop = true;
+            this.tdBtnSwitchToCN.UseVisualStyleBackColor = true;
+            this.tdBtnSwitchToCN.Visible = false;
+            // 
+            // tdBtnSwitchToTW
+            // 
+            this.tdBtnSwitchToTW.AutoSize = true;
+            this.tdBtnSwitchToTW.Checked = true;
+            this.tdBtnSwitchToTW.Location = new System.Drawing.Point(111, 241);
+            this.tdBtnSwitchToTW.Name = "tdBtnSwitchToTW";
+            this.tdBtnSwitchToTW.Size = new System.Drawing.Size(14, 13);
+            this.tdBtnSwitchToTW.TabIndex = 15;
+            this.tdBtnSwitchToTW.TabStop = true;
+            this.tdBtnSwitchToTW.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 354);
-            this.Controls.Add(this.txtBoxWoWClassicWoWTW);
-            this.Controls.Add(this.txtBoxWoWClassicWoWCN);
+            this.ClientSize = new System.Drawing.Size(419, 385);
+            this.Controls.Add(this.tdBtnSwitchToTW);
+            this.Controls.Add(this.tdBtnSwitchToCN);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblWoWClassicPathTip);
             this.Controls.Add(this.btnUnmount);
             this.Controls.Add(this.lblMountInfo);
@@ -232,8 +251,9 @@
         private System.Windows.Forms.Label lblMountInfo;
         private System.Windows.Forms.Button btnUnmount;
         private System.Windows.Forms.Label lblWoWClassicPathTip;
-        private System.Windows.Forms.TextBox txtBoxWoWClassicWoWCN;
-        private System.Windows.Forms.TextBox txtBoxWoWClassicWoWTW;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.RadioButton tdBtnSwitchToCN;
+        private System.Windows.Forms.RadioButton tdBtnSwitchToTW;
     }
 }
 

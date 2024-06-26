@@ -40,5 +40,15 @@ namespace WoWJunction
         {
             folders = new Folders();
         }
+
+        public WoWConfig TrimConfig()
+        {
+            folders.wow_root_path.Trim();
+            folders.wow_classic_path.Trim();
+            folders.wow_classic_path_cn.Trim();
+            folders.wow_classic_path_tw.Trim();
+
+            return this;
+        }
     }
 }

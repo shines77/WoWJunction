@@ -15,10 +15,20 @@ namespace WoWJunction
 {
     public partial class FormMain : Form
     {
-        private static string frmCaption = "WoWJunction";
-        private static string xmlConfigFile = "WoWJunction.exe.config.xml";
-        private static string xmlConfigRoot = ""; // "configuration";
-        private bool xmlConfigFileExists = false;
+        enum XmlFileStatus : int
+        {
+            Unknown,
+            FileIsNotExists,
+            OK,
+            Error
+        };
+
+        private const string FORM_CAPTION = "WoWJunction";
+        private const string XML_CONFIG_FILENAME = "WoWJunction.exe.config.xml";
+        private const string XML_CONFIG_ROOT = ""; // "configuration";
+
+        private XmlFileStatus xmlConfigFileStatus = XmlFileStatus.Unknown;
+        private ValidateResult xmlValidateResult = new ValidateResult();
         private volatile bool hasException = true;
         private WoWConfig wowConfig = new WoWConfig();
         private WoWConfig wowConfigFromFile = new WoWConfig();
@@ -48,13 +58,69 @@ namespace WoWJunction
             txtBoxMountFrom.Text = wowConfig.folders.wow_classic_path;
             txtBoxMountTo.Text = wowConfig.folders.wow_classic_path_tw;
 
-            txtBoxWoWClassicWoWCN.Text = wowConfigFromFile.folders.wow_classic_path_cn;
-            txtBoxWoWClassicWoWTW.Text = wowConfigFromFile.folders.wow_classic_path_tw;
+            if (xmlConfigFileStatus == XmlFileStatus.OK) {
+                if (!xmlValidateResult.success && xmlValidateResult.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY) {
+                    MessageBox.Show(this, "您尚未设置《魔兽世界》的相关路径！", FORM_CAPTION,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if(xmlConfigFileStatus == XmlFileStatus.Error) {
+                MessageBox.Show(this, "您的配置文件有错误，请重新配置《魔兽世界》的相关路径！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (xmlConfigFileStatus == XmlFileStatus.FileIsNotExists) {
+                //MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
+                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfigToXml();
+        }
+
+        private bool ReadConfigFromXml()
+        {
+            xmlConfigFileStatus = XmlFileStatus.Unknown;
+            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
+            string xmlFile = Path.Combine(strAppPath, XML_CONFIG_FILENAME);
+            if (File.Exists(xmlFile)) {
+                xmlConfigFileStatus = XmlFileStatus.Error;
+                //MessageBox.Show(this, $"xmlFile = \"{xmlFile}\"", frmCaption,
+                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try {
+                    WoWConfig xmlWoWConfig = XmlHelper.LoadFromXML<WoWConfig>(xmlFile, XML_CONFIG_ROOT);
+                    if (xmlWoWConfig != null) {
+                        wowConfigFromFile = xmlWoWConfig.TrimConfig();
+                        xmlConfigFileStatus = XmlFileStatus.OK;
+
+                        WoWConfig outWoWConfig = new WoWConfig();
+                        var result = WoWConfigManager.ValidateConfig(xmlWoWConfig, outWoWConfig);
+                        if (( result.success && result.err_no == 0) ||
+                            (!result.success && result.err_no == WoWConfigManager.ERR_WOW_ROOT_PATH_IS_EMPTY)) {
+                            wowConfig = outWoWConfig;
+                        }
+                        xmlValidateResult = result;
+                        return true;
+                    }
+                }
+                catch (Exception ex) {
+                    xmlConfigFileStatus = XmlFileStatus.Error;
+                }
+            }
+            else {
+                xmlConfigFileStatus = XmlFileStatus.FileIsNotExists;
+                MessageBox.Show(this, "您是第一次运行该程序，请先设置《魔兽世界》的主目录！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return false;
+        }
+
+        private void SaveConfigToXml()
+        {
+            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
+            string xmlFile = strAppPath + @"\" + XML_CONFIG_FILENAME;
+            XmlHelper.SaveToXML<WoWConfig>(wowConfigFromFile, xmlFile, XML_CONFIG_ROOT);
         }
 
         private void MountJunctionPoint(string junctionPoint, string targetDirectory, bool overwrite = true)
@@ -63,7 +129,7 @@ namespace WoWJunction
 
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (!result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else {
@@ -88,39 +154,10 @@ namespace WoWJunction
                 hasException = false;
 #endif
                 if (!hasException) {
-                    MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", frmCaption,
+                    MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", FORM_CAPTION,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
-
-        private bool ReadConfigFromXml()
-        {
-            xmlConfigFileExists = false;
-            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
-            string xmlFile = strAppPath + @"\" + xmlConfigFile;
-            if (File.Exists(xmlFile)) {
-                //MessageBox.Show(this, $"xmlFile = \"{xmlFile}\"", frmCaption,
-                //    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                WoWConfig xmlWoWConfig = XmlHelper.LoadFromXML<WoWConfig>(xmlFile, xmlConfigRoot);
-                if (xmlWoWConfig != null) {
-                    wowConfigFromFile = xmlWoWConfig;
-                    xmlConfigFileExists = true;
-                    return true;
-                }
-            }
-            else {
-                MessageBox.Show(this, $"xmlFile = \"{xmlFile}\" 不存在!", frmCaption,
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return false;
-        }
-
-        private void SaveConfigToXml()
-        {
-            string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
-            string xmlFile = strAppPath + @"\" + xmlConfigFile;
-            XmlHelper.SaveToXML<WoWConfig>(wowConfigFromFile, xmlFile, xmlConfigRoot);
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -155,13 +192,18 @@ namespace WoWJunction
             string targetVolume = Path.GetPathRoot(targetDirectory);
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", frmCaption,
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", frmCaption,
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -131,6 +131,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathUtils.cs" />
     <Compile Include="WoWConfig.cs" />
+    <Compile Include="WoWConfigManager.cs" />
     <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
