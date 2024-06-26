@@ -28,10 +28,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            this.btnMountToCN = new System.Windows.Forms.Button();
+            this.btnSwitchToCN = new System.Windows.Forms.Button();
             this.btnCheck = new System.Windows.Forms.Button();
-            this.btnMountToTW = new System.Windows.Forms.Button();
-            this.btnSettings = new System.Windows.Forms.Button();
+            this.btnSwitchToTW = new System.Windows.Forms.Button();
+            this.btnOpenSettings = new System.Windows.Forms.Button();
             this.lblCurrentStatus = new System.Windows.Forms.Label();
             this.lnkMountFrom = new System.Windows.Forms.LinkLabel();
             this.lblLinkTo = new System.Windows.Forms.Label();
@@ -46,15 +46,15 @@
             this.tdBtnSwitchToTW = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
-            // btnMountToCN
+            // btnSwitchToCN
             // 
-            this.btnMountToCN.Location = new System.Drawing.Point(141, 194);
-            this.btnMountToCN.Name = "btnMountToCN";
-            this.btnMountToCN.Size = new System.Drawing.Size(129, 32);
-            this.btnMountToCN.TabIndex = 0;
-            this.btnMountToCN.Text = "切换到国服";
-            this.btnMountToCN.UseVisualStyleBackColor = true;
-            this.btnMountToCN.Click += new System.EventHandler(this.btnMountToCN_Click);
+            this.btnSwitchToCN.Location = new System.Drawing.Point(141, 194);
+            this.btnSwitchToCN.Name = "btnSwitchToCN";
+            this.btnSwitchToCN.Size = new System.Drawing.Size(129, 32);
+            this.btnSwitchToCN.TabIndex = 0;
+            this.btnSwitchToCN.Text = "切换到国服";
+            this.btnSwitchToCN.UseVisualStyleBackColor = true;
+            this.btnSwitchToCN.Click += new System.EventHandler(this.btnSwitchToCN_Click);
             // 
             // btnCheck
             // 
@@ -66,25 +66,25 @@
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
-            // btnMountToTW
+            // btnSwitchToTW
             // 
-            this.btnMountToTW.Location = new System.Drawing.Point(141, 232);
-            this.btnMountToTW.Name = "btnMountToTW";
-            this.btnMountToTW.Size = new System.Drawing.Size(129, 31);
-            this.btnMountToTW.TabIndex = 2;
-            this.btnMountToTW.Text = "切换到亚服";
-            this.btnMountToTW.UseVisualStyleBackColor = true;
-            this.btnMountToTW.Click += new System.EventHandler(this.btnMountToTW_Click);
+            this.btnSwitchToTW.Location = new System.Drawing.Point(141, 232);
+            this.btnSwitchToTW.Name = "btnSwitchToTW";
+            this.btnSwitchToTW.Size = new System.Drawing.Size(129, 31);
+            this.btnSwitchToTW.TabIndex = 2;
+            this.btnSwitchToTW.Text = "切换到亚服";
+            this.btnSwitchToTW.UseVisualStyleBackColor = true;
+            this.btnSwitchToTW.Click += new System.EventHandler(this.btnSwitchToTW_Click);
             // 
-            // btnSettings
+            // btnOpenSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(299, 9);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(102, 31);
-            this.btnSettings.TabIndex = 3;
-            this.btnSettings.Text = "WoW 路径设置";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            this.btnOpenSettings.Location = new System.Drawing.Point(299, 9);
+            this.btnOpenSettings.Name = "btnOpenSettings";
+            this.btnOpenSettings.Size = new System.Drawing.Size(102, 31);
+            this.btnOpenSettings.TabIndex = 3;
+            this.btnOpenSettings.Text = "WoW 路径设置";
+            this.btnOpenSettings.UseVisualStyleBackColor = true;
+            this.btnOpenSettings.Click += new System.EventHandler(this.btnOpenSettings_Click);
             // 
             // lblCurrentStatus
             // 
@@ -217,10 +217,10 @@
             this.Controls.Add(this.lblLinkTo);
             this.Controls.Add(this.lnkMountFrom);
             this.Controls.Add(this.lblCurrentStatus);
-            this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.btnMountToTW);
+            this.Controls.Add(this.btnOpenSettings);
+            this.Controls.Add(this.btnSwitchToTW);
             this.Controls.Add(this.btnCheck);
-            this.Controls.Add(this.btnMountToCN);
+            this.Controls.Add(this.btnSwitchToCN);
             this.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -238,10 +238,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnMountToCN;
+        private System.Windows.Forms.Button btnSwitchToCN;
         private System.Windows.Forms.Button btnCheck;
-        private System.Windows.Forms.Button btnMountToTW;
-        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Button btnSwitchToTW;
+        private System.Windows.Forms.Button btnOpenSettings;
         private System.Windows.Forms.Label lblCurrentStatus;
         private System.Windows.Forms.LinkLabel lnkMountFrom;
         private System.Windows.Forms.Label lblLinkTo;

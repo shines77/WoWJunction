@@ -29,7 +29,7 @@ namespace WoWJunction
 
         private XmlFileStatus xmlConfigFileStatus = XmlFileStatus.Unknown;
         private ValidateResult xmlValidateResult = new ValidateResult();
-        private volatile bool hasException = true;
+        private volatile bool hasMountException = true;
         private WoWConfig wowConfig = new WoWConfig();
         private WoWConfig wowConfigFromFile = new WoWConfig();
 
@@ -76,10 +76,12 @@ namespace WoWJunction
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveConfigToXml();
+            if (xmlConfigFileStatus == XmlFileStatus.FileIsNotExists) {
+                SaveConfigToXml();
+            }
         }
 
-        private bool ReadConfigFromXml()
+        public bool ReadConfigFromXml()
         {
             xmlConfigFileStatus = XmlFileStatus.Unknown;
             string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
@@ -116,11 +118,12 @@ namespace WoWJunction
             return false;
         }
 
-        private void SaveConfigToXml()
+        public void SaveConfigToXml()
         {
             string strAppPath = Path.GetDirectoryName(Application.ExecutablePath);
-            string xmlFile = strAppPath + @"\" + XML_CONFIG_FILENAME;
+            string xmlFile = Path.Combine(strAppPath, XML_CONFIG_FILENAME);
             XmlHelper.SaveToXML<WoWConfig>(wowConfigFromFile, xmlFile, XML_CONFIG_ROOT);
+            xmlConfigFileStatus = XmlFileStatus.OK;
         }
 
         private void MountJunctionPoint(string junctionPoint, string targetDirectory, bool overwrite = true)
@@ -134,10 +137,10 @@ namespace WoWJunction
             }
             else {
 #if (USE_TRY)
-                hasException = true;
+                hasMountException = true;
                 try {
                     JunctionPoint.Create(junctionPoint, targetDirectory, overwrite);
-                    hasException = false;
+                    hasMountException = false;
                 }
                 catch (IOException ex) {
                     throw new IOException(ex.Message, ex);
@@ -149,28 +152,58 @@ namespace WoWJunction
                     //
                 }
 #else
-                hasException = true;
+                hasMountException = true;
                 JunctionPoint.Create(junctionPoint, targetDirectory, overwrite);
-                hasException = false;
+                hasMountException = false;
 #endif
-                if (!hasException) {
+                if (!hasMountException) {
                     MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", FORM_CAPTION,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void UpdateMountStatus()
+        {
+            UpdateMountLinkStatus();
+            UpdateMountLinkDetailStatus();
+            UpdateWoWVersion();
+            UpdateSwitchToStatus();
+        }
+
+        private void UpdateMountLinkStatus()
+        {
+            //
+        }
+
+        private void UpdateMountLinkDetailStatus()
+        {
+            //
+        }
+
+        private void UpdateWoWVersion()
+        {
+            //
+        }
+
+        private void UpdateSwitchToStatus()
+        {
+            //
+        }
+
+        private void btnOpenSettings_Click(object sender, EventArgs e)
         {
             FormSettings frmSettings = new FormSettings(this);
             DialogResult result = frmSettings.ShowDialog();
             if (result == DialogResult.OK) {
                 wowConfig = frmSettings.GetWoWConfig();
                 wowConfigFromFile = frmSettings.GetWoWConfigToFile();
+
+                SaveConfigToXml();
             }
         }
 
-        private void btnMountToCN_Click(object sender, EventArgs e)
+        private void btnSwitchToCN_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
@@ -178,7 +211,7 @@ namespace WoWJunction
             MountJunctionPoint(junctionPoint, targetDirectory, true);
         }
 
-        private void btnMountToTW_Click(object sender, EventArgs e)
+        private void btnSwitchToTW_Click(object sender, EventArgs e)
         {
             string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
             string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";

@@ -375,7 +375,6 @@ namespace WoWJunction
                 if (File.Exists(junctionPoint)) {
                     throw new IOException($"指定的路径: “{junctionPoint}”不是一个 junction point");
                 }
-
                 return;
             }
 

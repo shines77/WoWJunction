@@ -104,6 +104,22 @@ namespace WoWJunction
             return WoWConfigManager.ValidateConfig(uiWoWConfig, outWoWConfig);
         }
 
+        private void ApplyCurrentSettings()
+        {
+            WoWConfig outWoWConfig = new WoWConfig();
+            ValidateResult result = ValidateUIData(outWoWConfig);
+            if (!result.success) {
+                string message = WoWConfigManager.FormatValidateError(result.err_no);
+                MessageBox.Show(message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else {
+                UIDataExchange();
+                wowConfig = outWoWConfig;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
+
         private void btnBrowseWoWRootPath_Click(object sender, EventArgs e)
         {
             // WinXP样式的目录选择框, 没那么好用
@@ -143,9 +159,26 @@ namespace WoWJunction
                 Title = "请选择《魔兽世界》根目录的路径：",
                 InitialDirectory = Environment.CurrentDirectory
             };
+
+            TrimUIData();
+            bool folderIsExists = false;
+            string wow_root_path = txtBoxWoWRootPath.Text;
+            if (!string.IsNullOrEmpty(wow_root_path)) {
+                if (Directory.Exists(wow_root_path)) {
+                    openFolderDialog.InitialDirectory = wow_root_path;
+                    folderIsExists = true;
+                }
+            }
+            if (!folderIsExists) {
+                if (!string.IsNullOrEmpty(wowConfig.folders.wow_root_path)) {
+                    if (Directory.Exists(wowConfig.folders.wow_root_path)) {
+                        openFolderDialog.InitialDirectory = wowConfig.folders.wow_root_path;
+                    }
+                }
+            }
             if (openFolderDialog.ShowSelectDialog(this.Handle)) {
                 var selectFolder = openFolderDialog.FileName;
-                txtBoxWoWRootPath.Text = selectFolder;
+                txtBoxWoWRootPath.Text = selectFolder.Trim();
             }
         }
 
@@ -156,9 +189,23 @@ namespace WoWJunction
                 Title = "请选择《魔兽世界》怀旧服（国服）的路径：",
                 InitialDirectory = Environment.CurrentDirectory
             };
+
+            TrimUIData();
+            string wow_classic_path_cn = PathUtils.CombinePath(txtBoxWoWRootPath.Text, txtBoxWoWClassicPathCN.Text);
+            if (!string.IsNullOrEmpty(wow_classic_path_cn)) {
+                if (Directory.Exists(wow_classic_path_cn)) {
+                    openFolderDialog.InitialDirectory = wow_classic_path_cn;
+                }
+                else if (Directory.Exists(txtBoxWoWRootPath.Text)) {
+                    openFolderDialog.InitialDirectory = txtBoxWoWRootPath.Text;
+                }
+                else if (Directory.Exists(wowConfig.folders.wow_root_path)) {
+                    openFolderDialog.InitialDirectory = wowConfig.folders.wow_root_path;
+                }
+            }
             if (openFolderDialog.ShowSelectDialog(this.Handle)) {
                 var selectFolder = openFolderDialog.FileName;
-                txtBoxWoWClassicPathCN.Text = selectFolder;
+                txtBoxWoWClassicPathCN.Text = selectFolder.Trim();
             }
         }
 
@@ -169,31 +216,29 @@ namespace WoWJunction
                 Title = "请选择《魔兽世界》怀旧服（亚服）的路径：",
                 InitialDirectory = Environment.CurrentDirectory
             };
+
+            TrimUIData();
+            string wow_classic_path_tw = PathUtils.CombinePath(txtBoxWoWRootPath.Text, txtBoxWoWClassicPathTW.Text);
+            if (!string.IsNullOrEmpty(wow_classic_path_tw)) {
+                if (Directory.Exists(wow_classic_path_tw)) {
+                    openFolderDialog.InitialDirectory = wow_classic_path_tw;
+                }
+                else if (Directory.Exists(txtBoxWoWRootPath.Text)) {
+                    openFolderDialog.InitialDirectory = txtBoxWoWRootPath.Text;
+                }
+                else if (Directory.Exists(wowConfig.folders.wow_root_path)) {
+                    openFolderDialog.InitialDirectory = wowConfig.folders.wow_root_path;
+                }
+            }
             if (openFolderDialog.ShowSelectDialog(this.Handle)) {
                 var selectFolder = openFolderDialog.FileName;
-                txtBoxWoWClassicPathTW.Text = selectFolder;
+                txtBoxWoWClassicPathTW.Text = selectFolder.Trim();
             }
         }
 
         private void btnDefaultValue_Click(object sender, EventArgs e)
         {
             RestoreToDefaultValue();
-        }
-
-        private void ApplyCurrentSettings()
-        {
-            WoWConfig outWoWConfig = new WoWConfig();
-            ValidateResult result = ValidateUIData(outWoWConfig);
-            if (!result.success) {
-                string message = WoWConfigManager.FormatValidateError(result.err_no);
-                MessageBox.Show(message, "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else {
-                UIDataExchange();
-                wowConfig = outWoWConfig;
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
         }
 
         private void btnApply_Click(object sender, EventArgs e)
