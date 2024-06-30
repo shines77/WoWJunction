@@ -190,7 +190,8 @@ namespace WoWJunction
             }
             if (openFolderDialog.ShowSelectDialog(this.Handle)) {
                 var selectFolder = openFolderDialog.FileName;
-                txtBoxWoWRootPath.Text = selectFolder.Trim();
+                selectFolder = selectFolder.Trim();
+                txtBoxWoWRootPath.Text = PathUtils.ExtractWoWRootPath(selectFolder);
             }
         }
 

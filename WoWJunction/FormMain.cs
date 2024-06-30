@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace WoWJunction
 {
@@ -327,13 +328,81 @@ namespace WoWJunction
             xmlConfigFileStatus = XmlFileStatus.OK;
         }
 
+        private bool ScanWoWExeProcess()
+        {
+            bool exists = false;
+            bool hasAnyExceptions = true;
+            try {
+                Process current = Process.GetCurrentProcess();
+                foreach (Process process in Process.GetProcesses()) {
+                    if (process.Id == current.Id) continue;
+                    if (PathUtils.IsWowExe(process.ProcessName)) {
+                        string wowExePath = Path.GetDirectoryName(process.MainModule.FileName);
+                        if (wowExePath == wowConfig.folders.wow_classic_path_cn ||
+                            wowExePath == wowConfig.folders.wow_classic_path_tw) {
+                            exists = true;
+                            hasAnyExceptions = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (NotSupportedException ex) {
+                //
+            }
+            catch (Exception ex) {
+                //
+            }
+
+            if (hasAnyExceptions && !exists) {
+                try {
+                    Process current = Process.GetCurrentProcess();
+                    foreach (Process process in Process.GetProcesses()) {
+                        if (process.Id == current.Id) continue;
+                        if (PathUtils.IsWowExe(process.ProcessName)) {
+                            exists = true;
+                        }
+                    }
+                }
+                catch (NotSupportedException ex) {
+                    //
+                }
+                catch (Exception ex) {
+                    //
+                }
+            }
+            return exists;
+        }
+
+        private bool ScanBattleNetProcess()
+        {
+            bool exists = false;
+            try {
+                Process current = Process.GetCurrentProcess();
+                foreach (Process process in Process.GetProcesses()) {
+                    if (process.Id == current.Id) continue;
+                    string processName = process.ProcessName.ToLower();
+                    if (processName == "battle.net.exe") {
+                        exists = true;
+                        break;
+                    }
+                }
+            }
+            catch (NotSupportedException ex) {
+                //
+            }
+            catch (Exception ex) {
+                //
+            }
+            return exists;
+        }
+
         private void MountJunctionPoint(string junctionPoint, string targetDirectory,
             SwitchStatus switchStatus, bool overwrite = true)
         {
-            string targetVolume = Path.GetPathRoot(targetDirectory);
-
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (!result) {
+                string targetVolume = Path.GetPathRoot(targetDirectory);
                 MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point，游戏必须安装在 NTFS 格式的磁盘!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -395,31 +464,51 @@ namespace WoWJunction
             UpdateMountStatus();
         }
 
-        private void btnSwitchToCN_Click(object sender, EventArgs e)
+        private void SwitchToClassicArea(SwitchStatus switchStatus)
         {
-            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
+            string junctionPoint = wowConfig.folders.wow_classic_path;
+            string targetDirectory;
+            if (switchStatus == SwitchStatus.SwitchToCN)
+                targetDirectory = wowConfig.folders.wow_classic_path_cn;
+            else if (switchStatus == SwitchStatus.SwitchToTW)
+                targetDirectory = wowConfig.folders.wow_classic_path_tw;
+            else {
+                targetDirectory = "";
+                MessageBox.Show(this, "未指定正确的要切换的怀旧服区域版本！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            MountJunctionPoint(junctionPoint, targetDirectory, SwitchStatus.SwitchToCN, true);
+            if (ScanWoWExeProcess()) {
+                MessageBox.Show(this, "检测到《魔兽世界》怀旧服游戏进程正在运行，请先关闭游戏再切换！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (ScanBattleNetProcess()) {
+                MessageBox.Show(this, "检测到《暴雪》战网客户端正在运行，请先关闭战网客户端再切换！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            MountJunctionPoint(junctionPoint, targetDirectory, switchStatus, true);
 
             // 刷新当前状态
             UpdateMountStatus();
+        }
+
+        private void btnSwitchToCN_Click(object sender, EventArgs e)
+        {
+            SwitchToClassicArea(SwitchStatus.SwitchToCN);
         }
 
         private void btnSwitchToTW_Click(object sender, EventArgs e)
         {
-            string junctionPoint = @"C:\Blizzard\World of Warcraft\_classic_";
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_tw";
-
-            MountJunctionPoint(junctionPoint, targetDirectory, SwitchStatus.SwitchToTW, true);
-
-            // 刷新当前状态
-            UpdateMountStatus();
+            SwitchToClassicArea(SwitchStatus.SwitchToTW);
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            string targetDirectory = @"C:\Blizzard\World of Warcraft\_classic_cn";
+            string targetDirectory = @"C:\";
             string targetVolume = Path.GetPathRoot(targetDirectory);
             bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
             if (result) {

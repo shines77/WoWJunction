@@ -78,6 +78,7 @@
             // lnkLinkToSource
             // 
             this.lnkLinkToSource.AutoSize = true;
+            this.lnkLinkToSource.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkLinkToSource.Location = new System.Drawing.Point(109, 43);
             this.lnkLinkToSource.Name = "lnkLinkToSource";
             this.lnkLinkToSource.Size = new System.Drawing.Size(77, 13);
@@ -98,6 +99,7 @@
             // lnkLinkToTarget
             // 
             this.lnkLinkToTarget.AutoSize = true;
+            this.lnkLinkToTarget.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.lnkLinkToTarget.Location = new System.Drawing.Point(226, 43);
             this.lnkLinkToTarget.Name = "lnkLinkToTarget";
             this.lnkLinkToTarget.Size = new System.Drawing.Size(84, 13);
@@ -249,7 +251,7 @@
             this.toolStripSeparator1,
             this.toolStripMenuItemExit});
             this.contextMenuStripTaskBar.Name = "contextMenuStripTaskBar";
-            this.contextMenuStripTaskBar.Size = new System.Drawing.Size(154, 98);
+            this.contextMenuStripTaskBar.Size = new System.Drawing.Size(154, 76);
             // 
             // toolStripMenuItemShowMain
             // 

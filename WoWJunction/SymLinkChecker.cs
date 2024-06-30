@@ -126,8 +126,8 @@ namespace WoWJunction
                 _linkToPath = linkToPath;
             }
             if (_linkStatus == LinkStatus.Linked) {
-                _sourceName = PathUtils.FindLastFolder(_path);
-                _targetName = PathUtils.FindLastFolder(_linkToPath);
+                _sourceName = Path.DirectorySeparatorChar + PathUtils.FindLastFolder(_path);
+                _targetName = Path.DirectorySeparatorChar + PathUtils.FindLastFolder(_linkToPath);
 
                 if (parent != null) {
                     _switchStatus = parent.CheckSwitchStatus(_linkToPath);

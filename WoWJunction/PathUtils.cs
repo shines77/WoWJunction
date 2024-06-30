@@ -167,38 +167,80 @@ namespace WoWJunction
             // Find the first position of lastIndexOf('\\' or '/')
             int last = path.LastIndexOfAny(DirectorySeparators);
             if (last != -1) {
-                lastFolder = path.Substring(last, path.Length - last);
+                lastFolder = path.Substring(last + 1, path.Length - (last + 1));
             }
             return lastFolder;
         }
 
         public static string ExtractWoWRootPath(string path)
         {
-            string[] WoWSubPath = new string[]
+            string[] WoWSubPathes = new string[]
             {
                 "_classic_",
                 "_classic_era_",
                 "_retail_",
                 "_classic_ptr_",
-                "_ptr_",
+                "_ptr_"
             };
 
-            string wowRootPath = "";
             string wowPath = path.Trim();
+            string wowRootPath = wowPath;
             if (!Directory.Exists(wowPath)) {
-                wowPath = Path.GetDirectoryName(wowPath);
+                if (File.Exists(wowPath)) {
+                    wowPath = Path.GetDirectoryName(wowPath);
+                }
             }
             wowPath = PathUtils.NormalizeFullPath(wowPath);
 
-            foreach (string subPath in WoWSubPath) {
+            bool found = false;
+            string iWowPath = wowPath.ToLower();
+
+            // Find all version's wow sub path
+            foreach (string subPath in WoWSubPathes) {
                 if (!string.IsNullOrEmpty(subPath)) {
-                    if (wowPath.EndsWith(subPath) && (wowPath.Length >= (subPath.Length + 1))) {
+                    if (iWowPath.EndsWith(subPath) && (iWowPath.Length >= (subPath.Length + 1))) {
                         wowRootPath = wowPath.Substring(0, wowPath.Length - (subPath.Length + 1));
+                        found = true;
                         break;
                     }
                 }
             }
+
+            // Find the ends with _classic_xxxx format
+            if (!found) {
+                string lastFolder = PathUtils.FindLastFolder(wowPath);
+                lastFolder = lastFolder.ToLower();
+                if (!string.IsNullOrEmpty(lastFolder)) {
+                    if (lastFolder.StartsWith("_classic_")) {
+                        wowRootPath = wowPath.Substring(0, wowPath.Length - (lastFolder.Length + 1));
+                    }
+                }
+            }
             return wowRootPath;
+        }
+
+        public static bool IsWowExe(string exeName)
+        {
+            string[] WoWExeNames = new string[]
+            {
+                "Wow.exe",
+                "WowClassic.exe",
+                "WowT.exe",
+                "WowClassicT.exe"
+            };
+
+            bool isWowExe = false;
+            exeName = exeName.Trim().ToLower();
+            foreach (string vWowExe in WoWExeNames) {
+                string wowExe = vWowExe.ToLower();
+                if (!string.IsNullOrEmpty(wowExe)) {
+                    if (exeName == wowExe) {
+                        isWowExe = true;
+                        break;
+                    }
+                }
+            }
+            return isWowExe;
         }
     }
 }
