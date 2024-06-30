@@ -18,14 +18,16 @@ namespace WoWJunction
         /// <returns></returns>
         public static bool IsRelativePath(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                if (path.StartsWith("\\") | path.StartsWith("/")) {
-                    if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
-                        return true;
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    if (path.StartsWith("\\") | path.StartsWith("/")) {
+                        if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
+                            return true;
+                        }
                     }
+                    return !Path.IsPathRooted(path);
                 }
-                return !Path.IsPathRooted(path);
             }
 
             return true;
@@ -40,14 +42,16 @@ namespace WoWJunction
         /// <returns></returns>
         public static bool IsAbsolutePath(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                if (path.StartsWith("\\") | path.StartsWith("/")) {
-                    if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
-                        return false;
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    if (path.StartsWith("\\") | path.StartsWith("/")) {
+                        if (!(path.StartsWith("\\\\") | path.StartsWith("//"))) {
+                            return false;
+                        }
                     }
+                    return Path.IsPathRooted(path);
                 }
-                return Path.IsPathRooted(path);
             }
 
             return false;
@@ -60,10 +64,12 @@ namespace WoWJunction
         /// <returns></returns>
         public static string RemovePathTailSeparator(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                if (path.EndsWith("\\") | path.EndsWith("/")) {
-                    path = path.Substring(0, path.Length - 1);
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    if (path.EndsWith("\\") | path.EndsWith("/")) {
+                        path = path.Substring(0, path.Length - 1);
+                    }
                 }
             }
             return path;
@@ -76,11 +82,13 @@ namespace WoWJunction
         /// <returns></returns>
         public static string RemoveFullPathTailSeparator(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                path = Path.GetFullPath(path);
-                if (path.EndsWith("\\") | path.EndsWith("/")) {
-                    path = path.Substring(0, path.Length - 1);
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    path = Path.GetFullPath(path);
+                    if (path.EndsWith("\\") | path.EndsWith("/")) {
+                        path = path.Substring(0, path.Length - 1);
+                    }
                 }
             }
             return path;
@@ -93,11 +101,13 @@ namespace WoWJunction
         /// <returns></returns>
         public static string NormalizeFullPath(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                path = Path.GetFullPath(path);
-                if (path.EndsWith("\\") | path.EndsWith("/")) {
-                    path = path.Substring(0, path.Length - 1);
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    path = Path.GetFullPath(path);
+                    if (path.EndsWith("\\") | path.EndsWith("/")) {
+                        path = path.Substring(0, path.Length - 1);
+                    }
                 }
             }
             return path;
@@ -110,11 +120,13 @@ namespace WoWJunction
         /// <returns></returns>
         public static string NormalizeFullPathWithSep(string path)
         {
-            path.Trim();
             if (!String.IsNullOrEmpty(path)) {
-                path = Path.GetFullPath(path);
-                if (!(path.EndsWith("\\") | path.EndsWith("/"))) {
-                    path = path + Path.DirectorySeparatorChar;
+                path.Trim();
+                if (!String.IsNullOrEmpty(path)) {
+                    path = Path.GetFullPath(path);
+                    if (!(path.EndsWith("\\") | path.EndsWith("/"))) {
+                        path = path + Path.DirectorySeparatorChar;
+                    }
                 }
             }
             return path;
@@ -136,20 +148,24 @@ namespace WoWJunction
             else
                 separatorChar2 = "\\";
 
-            path1.Trim();
-            if (path1.EndsWith(separatorChar1)) {
-                // Do nothing !!
-            }
-            else if (path1.EndsWith(separatorChar2)) {
-                // 当 path1 以非当前系统的 DirectorySeparatorChar 分隔符结尾时, 先移除结尾的 DirectorySeparatorChar
-                path1 = path1.Substring(0, path1.Length - 1);
+            if (!String.IsNullOrEmpty(path1)) {
+                path1.Trim();
+                if (path1.EndsWith(separatorChar1)) {
+                    // Do nothing !!
+                }
+                else if (path1.EndsWith(separatorChar2)) {
+                    // 当 path1 以非当前系统的 DirectorySeparatorChar 分隔符结尾时, 先移除结尾的 DirectorySeparatorChar
+                    path1 = path1.Substring(0, path1.Length - 1);
+                }
             }
 
-            // 当 path2 以 "\\" 或 "/" 开头时, 先移除开头的 DirectorySeparatorChar.
-            path2.Trim();
-            if (path2.StartsWith(separatorChar1) | path2.StartsWith(separatorChar2)) {
-                if (path2.Length > 0)
-                    path2 = path2.Substring(1, path2.Length - 1);
+            if (!String.IsNullOrEmpty(path2)) {
+                // 当 path2 以 "\\" 或 "/" 开头时, 先移除开头的 DirectorySeparatorChar.
+                path2.Trim();
+                if (path2.StartsWith(separatorChar1) | path2.StartsWith(separatorChar2)) {
+                    if (path2.Length > 0)
+                        path2 = path2.Substring(1, path2.Length - 1);
+                }
             }
 
             string path = Path.Combine(path1, path2);
@@ -161,13 +177,17 @@ namespace WoWJunction
             char[] DirectorySeparators = new char[] { '\\', '/' };
             string lastFolder = "";
 
-            // Remove the end of '\\' or '/' char
-            path = NormalizeFullPath(path);
+            if (!String.IsNullOrEmpty(path)) {
+                // Remove the end of '\\' or '/' char
+                path = NormalizeFullPath(path);
 
-            // Find the first position of lastIndexOf('\\' or '/')
-            int last = path.LastIndexOfAny(DirectorySeparators);
-            if (last != -1) {
-                lastFolder = path.Substring(last + 1, path.Length - (last + 1));
+                // Find the first position of lastIndexOf('\\' or '/')
+                int last = path.LastIndexOfAny(DirectorySeparators);
+                if (last != -1) {
+                    lastFolder = path.Substring(last + 1, path.Length - (last + 1));
+                } else {
+                    lastFolder = path;
+                }
             }
             return lastFolder;
         }
@@ -182,6 +202,10 @@ namespace WoWJunction
                 "_classic_ptr_",
                 "_ptr_"
             };
+
+            if (String.IsNullOrEmpty(path)) {
+                return path;
+            }
 
             string wowPath = path.Trim();
             string wowRootPath = wowPath;
@@ -230,13 +254,15 @@ namespace WoWJunction
             };
 
             bool isWowExe = false;
-            exeName = exeName.Trim().ToLower();
-            foreach (string vWowExe in WoWExeNames) {
-                string wowExe = vWowExe.ToLower();
-                if (!string.IsNullOrEmpty(wowExe)) {
-                    if (exeName == wowExe) {
-                        isWowExe = true;
-                        break;
+            if (!String.IsNullOrEmpty(exeName)) {
+                exeName = exeName.Trim().ToLower();
+                foreach (string vWowExe in WoWExeNames) {
+                    string wowExe = vWowExe.ToLower();
+                    if (!string.IsNullOrEmpty(wowExe)) {
+                        if (exeName == wowExe) {
+                            isWowExe = true;
+                            break;
+                        }
                     }
                 }
             }
@@ -254,13 +280,15 @@ namespace WoWJunction
             };
 
             bool isWowExe = false;
-            processName = processName.Trim().ToLower();
-            foreach (string vWowExeProcess in WoWProcessNames) {
-                string wowExeProcess = vWowExeProcess.ToLower();
-                if (!string.IsNullOrEmpty(wowExeProcess)) {
-                    if (processName == wowExeProcess) {
-                        isWowExe = true;
-                        break;
+            if (!String.IsNullOrEmpty(processName)) {
+                processName = processName.Trim().ToLower();
+                foreach (string vWowExeProcess in WoWProcessNames) {
+                    string wowExeProcess = vWowExeProcess.ToLower();
+                    if (!string.IsNullOrEmpty(wowExeProcess)) {
+                        if (processName == wowExeProcess) {
+                            isWowExe = true;
+                            break;
+                        }
                     }
                 }
             }

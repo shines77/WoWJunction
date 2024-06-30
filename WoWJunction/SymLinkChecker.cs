@@ -111,35 +111,47 @@ namespace WoWJunction
 
         public bool CheckSymLink(string path)
         {
+            LinkStatus linkStatus = LinkStatus.Unknown;
             string linkToPath = null;
+
             try {
-                path.Trim();
-                if (String.IsNullOrEmpty(path)) {
-                    _linkStatus = LinkStatus.IsEmpty;
-                }
-                else {
-                    if (!Directory.Exists(path)) {
-                        if (File.Exists(path))
-                            _linkStatus = LinkStatus.IsAFile;
-                        else
-                            _linkStatus = LinkStatus.FolderNotExist;
+                if (!String.IsNullOrEmpty(path)) {
+                    path.Trim();
+                    if (String.IsNullOrEmpty(path)) {
+                        linkStatus = LinkStatus.IsEmpty;
                     }
                     else {
-                        linkToPath = JunctionPoint.GetTarget(path);
-                        _linkStatus = LinkStatus.Linked;
+                        if (!Directory.Exists(path)) {
+                            if (File.Exists(path))
+                                linkStatus = LinkStatus.IsAFile;
+                            else
+                                linkStatus = LinkStatus.FolderNotExist;
+                        }
+                        else {
+                            linkToPath = JunctionPoint.GetTarget(path);
+                            linkStatus = LinkStatus.Linked;
+                        }
                     }
+                } else {
+                    linkStatus = LinkStatus.IsEmpty;
                 }
             }
             catch (IOException ex) {
-                _linkStatus = LinkStatus.TargetNotExist;
+                linkStatus = LinkStatus.TargetNotExist;
             }
             finally {
                 _path = path;
                 _linkToPath = linkToPath;
+                _linkStatus = linkStatus;
             }
-            if (_linkStatus == LinkStatus.Linked) {
+
+            if (_linkStatus == LinkStatus.Linked ||
+                _linkStatus == LinkStatus.FolderNotExist ||
+                _linkStatus == LinkStatus.IsEmpty) {
                 _sourceName = Path.DirectorySeparatorChar + PathUtils.FindLastFolder(_path);
+                _sourceName.Trim();
                 _targetName = Path.DirectorySeparatorChar + PathUtils.FindLastFolder(_linkToPath);
+                _targetName.Trim();
 
                 if (parent != null) {
                     _switchStatus = parent.CheckSwitchStatus(_linkToPath);

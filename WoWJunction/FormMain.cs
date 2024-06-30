@@ -139,6 +139,8 @@ namespace WoWJunction
 
             if (linkToPath != null && linkStatus == LinkStatus.Linked) {
                 lnkLinkToSource.Text = symLinkChecker.GetSourceName();
+                lnkLinkToTarget.LinkColor = Color.Blue;
+                lnkLinkToTarget.ActiveLinkColor = Color.Red;
                 lnkLinkToTarget.Text = symLinkChecker.GetTargetName();
             }
             else {
@@ -163,10 +165,12 @@ namespace WoWJunction
 
             txtBoxMountFrom.Text = wowConfig.folders.wow_classic_path;
             if (linkToPath != null && linkStatus == LinkStatus.Linked) {
+                txtBoxMountTo.ForeColor = Color.Black;
                 txtBoxMountTo.Text = linkToPath;
             }
             else {
-                txtBoxMountTo.Text = symLinkChecker.GetLinkErrorInfo();
+                txtBoxMountTo.ForeColor = Color.Red;
+                txtBoxMountTo.Text = "错误：" + symLinkChecker.GetLinkErrorInfo();
             }
         }
 
@@ -178,14 +182,16 @@ namespace WoWJunction
         public SwitchStatus CheckSwitchStatus(string linkToPath)
         {
             SwitchStatus switchStatus = SwitchStatus.Error;
-            linkToPath.Trim();
             if (!String.IsNullOrEmpty(linkToPath)) {
-                if (linkToPath == wowConfig.folders.wow_classic_path_cn)
-                    switchStatus = SwitchStatus.SwitchToCN;
-                else if (linkToPath == wowConfig.folders.wow_classic_path_tw)
-                    switchStatus = SwitchStatus.SwitchToTW;
-                else
-                    switchStatus = SwitchStatus.Unknown;
+                linkToPath.Trim();
+                if (!String.IsNullOrEmpty(linkToPath)) {
+                    if (linkToPath == wowConfig.folders.wow_classic_path_cn)
+                        switchStatus = SwitchStatus.SwitchToCN;
+                    else if (linkToPath == wowConfig.folders.wow_classic_path_tw)
+                        switchStatus = SwitchStatus.SwitchToTW;
+                    else
+                        switchStatus = SwitchStatus.Unknown;
+                }
             }
             return switchStatus;
         }
@@ -412,6 +418,7 @@ namespace WoWJunction
                     if (File.Exists(fJunctionPoint)) {
                         MessageBox.Show(this, $"错误：要绑定的目录“{fJunctionPoint}”是一个文件！", FORM_CAPTION,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
 
@@ -420,10 +427,12 @@ namespace WoWJunction
                     if (File.Exists(fTargetDirectory)) {
                         MessageBox.Show(this, $"错误：指定的目标绑定目录“{fTargetDirectory}”是一个文件！", FORM_CAPTION,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                     else {
                         MessageBox.Show(this, $"指定的目标绑定目录“{fTargetDirectory}”不存在！", FORM_CAPTION,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
 #if (USE_TRY)
@@ -470,6 +479,7 @@ namespace WoWJunction
                     if (File.Exists(fJunctionPoint)) {
                         MessageBox.Show(this, $"错误：要绑定的目录“{fJunctionPoint}”是一个文件！", FORM_CAPTION,
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
 
@@ -488,6 +498,15 @@ namespace WoWJunction
         {
             // 刷新当前状态
             UpdateMountStatus();
+
+            string linkToPath = symLinkChecker.GetLinkToPath();
+            LinkStatus linkStatus = symLinkChecker.GetLinkStatus();
+            if (linkToPath == null || linkStatus != LinkStatus.Linked) {
+                string errorInfo = symLinkChecker.GetLinkErrorInfo();
+                MessageBox.Show(this, $"软链接未成功，原因是：{errorInfo}", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             SwitchStatus curSwitchStatus = symLinkChecker.GetSwitchStatus();
             if (switchStatus == curSwitchStatus) {
@@ -529,6 +548,18 @@ namespace WoWJunction
 
         private void UnmountSymLink()
         {
+            // 刷新当前状态
+            UpdateMountStatus();
+
+            string linkToPath = symLinkChecker.GetLinkToPath();
+            LinkStatus linkStatus = symLinkChecker.GetLinkStatus();
+            if (linkToPath == null || linkStatus != LinkStatus.Linked) {
+                string errorInfo = symLinkChecker.GetLinkErrorInfo();
+                MessageBox.Show(this, $"软链接未成功，原因是：{errorInfo}", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (ScanWoWExeProcess()) {
                 MessageBox.Show(this, "检测到《魔兽世界》怀旧服游戏进程正在运行，请先关闭游戏再解绑！", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -556,6 +587,9 @@ namespace WoWJunction
                 wowConfigFromFile = frmSettings.GetWoWConfigToFile();
 
                 SaveConfigToXml();
+
+                // 刷新当前状态
+                UpdateMountStatus();
             }
         }
 
