@@ -97,6 +97,18 @@ namespace WoWJunction
             }
         }
 
+        public static string GetSwitchAreaName(SwitchStatus switchStatus)
+        {
+            string areaName;
+            if (switchStatus == SwitchStatus.SwitchToCN)
+                areaName = "（国服）";
+            else if (switchStatus == SwitchStatus.SwitchToTW)
+                areaName = "（亚服）";
+            else
+                areaName = "（未知）";
+            return areaName;
+        }
+
         public bool CheckSymLink(string path)
         {
             string linkToPath = null;

@@ -312,7 +312,6 @@ namespace WoWJunction
         public static void Create(string junctionPoint, string targetDirectory, bool overwrite)
         {
             targetDirectory = Path.GetFullPath(targetDirectory);
-
             if (!Directory.Exists(targetDirectory)) {
                 throw new IOException($"{nameof(targetDirectory)} 指定的目标目录“{targetDirectory}”不存在");
             }

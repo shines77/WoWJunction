@@ -359,7 +359,7 @@ namespace WoWJunction
                     Process current = Process.GetCurrentProcess();
                     foreach (Process process in Process.GetProcesses()) {
                         if (process.Id == current.Id) continue;
-                        if (PathUtils.IsWowExe(process.ProcessName)) {
+                        if (PathUtils.IsWowExeProcess(process.ProcessName)) {
                             exists = true;
                         }
                     }
@@ -382,7 +382,7 @@ namespace WoWJunction
                 foreach (Process process in Process.GetProcesses()) {
                     if (process.Id == current.Id) continue;
                     string processName = process.ProcessName.ToLower();
-                    if (processName == "battle.net.exe") {
+                    if (processName == "battle.net") {
                         exists = true;
                         break;
                     }
@@ -400,13 +400,32 @@ namespace WoWJunction
         private void MountJunctionPoint(string junctionPoint, string targetDirectory,
             SwitchStatus switchStatus, bool overwrite = true)
         {
-            bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
+            bool result = JunctionPoint.PathIsSupportReparsePoint(junctionPoint);
             if (!result) {
-                string targetVolume = Path.GetPathRoot(targetDirectory);
+                string targetVolume = Path.GetPathRoot(junctionPoint);
                 MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point，游戏必须安装在 NTFS 格式的磁盘!", FORM_CAPTION,
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else {
+                string fJunctionPoint = Path.GetFullPath(junctionPoint);
+                if (!Directory.Exists(fJunctionPoint)) {
+                    if (File.Exists(fJunctionPoint)) {
+                        MessageBox.Show(this, $"错误：要绑定的目录“{fJunctionPoint}”是一个文件！", FORM_CAPTION,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+                string fTargetDirectory = Path.GetFullPath(targetDirectory);
+                if (!Directory.Exists(fTargetDirectory)) {
+                    if (File.Exists(fTargetDirectory)) {
+                        MessageBox.Show(this, $"错误：指定的目标绑定目录“{fTargetDirectory}”是一个文件！", FORM_CAPTION,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else {
+                        MessageBox.Show(this, $"指定的目标绑定目录“{fTargetDirectory}”不存在！", FORM_CAPTION,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
 #if (USE_TRY)
                 hasMountException = true;
                 try {
@@ -430,42 +449,54 @@ namespace WoWJunction
                 if (!hasMountException) {
                     //MessageBox.Show(this, $"目录 \"{targetDirectory}\" 软链接到 \"{junctionPoint}\" 成功!", FORM_CAPTION,
                     //    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    string areaName = "";
-                    if (switchStatus == SwitchStatus.SwitchToCN) {
-                        areaName = "（国服）";
-                    }
-                    else if (switchStatus == SwitchStatus.SwitchToTW) {
-                        areaName = "（亚服）";
-                    }
-                    else {
-                        areaName = "（未知）";
-                    }
+                    string areaName = SymLinkChecker.GetSwitchAreaName(switchStatus);
                     MessageBox.Show(this, $"已成功切换至魔兽世界怀旧服{areaName}！", FORM_CAPTION,
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void btnOpenSettings_Click(object sender, EventArgs e)
+        private void UnmountJunctionPoint(string junctionPoint)
         {
-            FormSettings frmSettings = new FormSettings(this);
-            DialogResult result = frmSettings.ShowDialog();
-            if (result == DialogResult.OK) {
-                wowConfig = frmSettings.GetWoWConfig();
-                wowConfigFromFile = frmSettings.GetWoWConfigToFile();
-
-                SaveConfigToXml();
+            bool result = JunctionPoint.PathIsSupportReparsePoint(junctionPoint);
+            if (!result) {
+                string targetVolume = Path.GetPathRoot(junctionPoint);
+                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point，游戏必须安装在 NTFS 格式的磁盘!", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
+            else {
+                string fJunctionPoint = Path.GetFullPath(junctionPoint);
+                if (!Directory.Exists(fJunctionPoint)) {
+                    if (File.Exists(fJunctionPoint)) {
+                        MessageBox.Show(this, $"错误：要绑定的目录“{fJunctionPoint}”是一个文件！", FORM_CAPTION,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
 
-        private void btnRefreshStatus_Click(object sender, EventArgs e)
-        {
-            // 刷新当前状态
-            UpdateMountStatus();
+                hasMountException = true;
+                JunctionPoint.Delete(junctionPoint);
+                hasMountException = false;
+
+                if (!hasMountException) {
+                    MessageBox.Show(this, "魔兽世界怀旧服软链接已解除绑定！", FORM_CAPTION,
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
 
         private void SwitchToClassicArea(SwitchStatus switchStatus)
         {
+            // 刷新当前状态
+            UpdateMountStatus();
+
+            SwitchStatus curSwitchStatus = symLinkChecker.GetSwitchStatus();
+            if (switchStatus == curSwitchStatus) {
+                string areaName = SymLinkChecker.GetSwitchAreaName(switchStatus);
+                MessageBox.Show(this, $"当前已经是《魔兽世界》怀旧服{areaName}，无需切换！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string junctionPoint = wowConfig.folders.wow_classic_path;
             string targetDirectory;
             if (switchStatus == SwitchStatus.SwitchToCN)
@@ -496,6 +527,44 @@ namespace WoWJunction
             UpdateMountStatus();
         }
 
+        private void UnmountSymLink()
+        {
+            if (ScanWoWExeProcess()) {
+                MessageBox.Show(this, "检测到《魔兽世界》怀旧服游戏进程正在运行，请先关闭游戏再解绑！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (ScanBattleNetProcess()) {
+                MessageBox.Show(this, "检测到《暴雪》战网客户端正在运行，请先关闭战网客户端再解绑！", FORM_CAPTION,
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string junctionPoint = wowConfig.folders.wow_classic_path;
+            UnmountJunctionPoint(junctionPoint);
+
+            // 刷新当前状态
+            UpdateMountStatus();
+        }
+
+        private void btnOpenSettings_Click(object sender, EventArgs e)
+        {
+            FormSettings frmSettings = new FormSettings(this);
+            DialogResult result = frmSettings.ShowDialog();
+            if (result == DialogResult.OK) {
+                wowConfig = frmSettings.GetWoWConfig();
+                wowConfigFromFile = frmSettings.GetWoWConfigToFile();
+
+                SaveConfigToXml();
+            }
+        }
+
+        private void btnRefreshStatus_Click(object sender, EventArgs e)
+        {
+            // 刷新当前状态
+            UpdateMountStatus();
+        }
+
         private void btnSwitchToCN_Click(object sender, EventArgs e)
         {
             SwitchToClassicArea(SwitchStatus.SwitchToCN);
@@ -506,18 +575,13 @@ namespace WoWJunction
             SwitchToClassicArea(SwitchStatus.SwitchToTW);
         }
 
-        private void btnCheck_Click(object sender, EventArgs e)
+        private void btnUnmount_Click(object sender, EventArgs e)
         {
-            string targetDirectory = @"C:\";
-            string targetVolume = Path.GetPathRoot(targetDirectory);
-            bool result = JunctionPoint.PathIsSupportReparsePoint(targetDirectory);
-            if (result) {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 支持 Reparse Point!", FORM_CAPTION,
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else {
-                MessageBox.Show(this, $"卷 \"{targetVolume}\" 不支持 Reparse Point!", FORM_CAPTION,
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show(this,
+                "如无特殊情况，请勿轻易解除软链接的绑定，\n除非您在软链接的绑定上出现问题。\n\n确定要执行该操作吗？",
+                FORM_CAPTION, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes) {
+                UnmountSymLink();
             }
         }
 

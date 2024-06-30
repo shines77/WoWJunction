@@ -242,5 +242,29 @@ namespace WoWJunction
             }
             return isWowExe;
         }
+
+        public static bool IsWowExeProcess(string processName)
+        {
+            string[] WoWProcessNames = new string[]
+            {
+                "Wow",
+                "WowClassic",
+                "WowT",
+                "WowClassicT"
+            };
+
+            bool isWowExe = false;
+            processName = processName.Trim().ToLower();
+            foreach (string vWowExeProcess in WoWProcessNames) {
+                string wowExeProcess = vWowExeProcess.ToLower();
+                if (!string.IsNullOrEmpty(wowExeProcess)) {
+                    if (processName == wowExeProcess) {
+                        isWowExe = true;
+                        break;
+                    }
+                }
+            }
+            return isWowExe;
+        }
     }
 }

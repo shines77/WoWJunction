@@ -44,7 +44,6 @@
             this.tdBtnSwitchToTW = new System.Windows.Forms.RadioButton();
             this.btnSwitchToTW = new System.Windows.Forms.Button();
             this.btnUnmount = new System.Windows.Forms.Button();
-            this.btnCheck = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.chkBoxMinimizeToTaskbarWhenExiting = new System.Windows.Forms.CheckBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -203,20 +202,11 @@
             this.btnUnmount.TabIndex = 14;
             this.btnUnmount.Text = "解除软链接绑定";
             this.btnUnmount.UseVisualStyleBackColor = true;
-            // 
-            // btnCheck
-            // 
-            this.btnCheck.Location = new System.Drawing.Point(130, 340);
-            this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(149, 30);
-            this.btnCheck.TabIndex = 15;
-            this.btnCheck.Text = "检测是否支持软链接";
-            this.btnCheck.UseVisualStyleBackColor = true;
-            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
+            this.btnUnmount.Click += new System.EventHandler(this.btnUnmount_Click);
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(130, 376);
+            this.btnExit.Location = new System.Drawing.Point(130, 340);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(149, 30);
             this.btnExit.TabIndex = 16;
@@ -227,7 +217,7 @@
             // chkBoxMinimizeToTaskbarWhenExiting
             // 
             this.chkBoxMinimizeToTaskbarWhenExiting.AutoSize = true;
-            this.chkBoxMinimizeToTaskbarWhenExiting.Location = new System.Drawing.Point(130, 422);
+            this.chkBoxMinimizeToTaskbarWhenExiting.Location = new System.Drawing.Point(130, 386);
             this.chkBoxMinimizeToTaskbarWhenExiting.Name = "chkBoxMinimizeToTaskbarWhenExiting";
             this.chkBoxMinimizeToTaskbarWhenExiting.Size = new System.Drawing.Size(156, 17);
             this.chkBoxMinimizeToTaskbarWhenExiting.TabIndex = 17;
@@ -283,7 +273,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 452);
+            this.ClientSize = new System.Drawing.Size(419, 419);
             this.Controls.Add(this.chkBoxMinimizeToTaskbarWhenExiting);
             this.Controls.Add(this.lblCurrentStatus);
             this.Controls.Add(this.lnkLinkToTarget);
@@ -300,7 +290,6 @@
             this.Controls.Add(this.tdBtnSwitchToCN);
             this.Controls.Add(this.btnSwitchToTW);
             this.Controls.Add(this.btnUnmount);
-            this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.btnExit);
             this.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -335,7 +324,6 @@
         private System.Windows.Forms.RadioButton tdBtnSwitchToTW;
         private System.Windows.Forms.Button btnSwitchToTW;
         private System.Windows.Forms.Button btnUnmount;
-        private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.CheckBox chkBoxMinimizeToTaskbarWhenExiting;
         private System.Windows.Forms.NotifyIcon notifyIcon;
