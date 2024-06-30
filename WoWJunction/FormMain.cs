@@ -512,7 +512,7 @@ namespace WoWJunction
             if (switchStatus == curSwitchStatus) {
                 string areaName = SymLinkChecker.GetSwitchAreaName(switchStatus);
                 MessageBox.Show(this, $"当前已经是《魔兽世界》怀旧服{areaName}，无需切换！", FORM_CAPTION,
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
