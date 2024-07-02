@@ -52,12 +52,27 @@
             this.toolStripMenuItemHideMain = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOpenWoWClassicFolder = new System.Windows.Forms.Button();
+            this.btnOpenWoWClassicLinkedFolder = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripVersionLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripAuthorLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripPaddingLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSourceLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripGiteeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripGitHubLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripHelpLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.AuthorInfoPanel = new System.Windows.Forms.Panel();
+            this.lnkLabelAuthorInfoCN = new System.Windows.Forms.LinkLabel();
+            this.lnkLabelAuthorInfoTW = new System.Windows.Forms.LinkLabel();
             this.contextMenuStripTaskBar.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.AuthorInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOpenSettings
             // 
-            this.btnOpenSettings.Location = new System.Drawing.Point(299, 9);
+            this.btnOpenSettings.Location = new System.Drawing.Point(351, 12);
             this.btnOpenSettings.Name = "btnOpenSettings";
             this.btnOpenSettings.Size = new System.Drawing.Size(102, 31);
             this.btnOpenSettings.TabIndex = 0;
@@ -68,7 +83,7 @@
             // lblCurrentStatus
             // 
             this.lblCurrentStatus.AutoSize = true;
-            this.lblCurrentStatus.Location = new System.Drawing.Point(174, 21);
+            this.lblCurrentStatus.Location = new System.Drawing.Point(199, 21);
             this.lblCurrentStatus.Name = "lblCurrentStatus";
             this.lblCurrentStatus.Size = new System.Drawing.Size(72, 13);
             this.lblCurrentStatus.TabIndex = 1;
@@ -78,18 +93,19 @@
             // 
             this.lnkLinkToSource.AutoSize = true;
             this.lnkLinkToSource.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkLinkToSource.Location = new System.Drawing.Point(109, 43);
+            this.lnkLinkToSource.Location = new System.Drawing.Point(134, 43);
             this.lnkLinkToSource.Name = "lnkLinkToSource";
             this.lnkLinkToSource.Size = new System.Drawing.Size(77, 13);
             this.lnkLinkToSource.TabIndex = 2;
             this.lnkLinkToSource.TabStop = true;
             this.lnkLinkToSource.Text = "\\_classic_";
+            this.lnkLinkToSource.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLinkToSource_LinkClicked);
             // 
             // lblLinkTo
             // 
             this.lblLinkTo.AutoSize = true;
             this.lblLinkTo.ForeColor = System.Drawing.Color.Red;
-            this.lblLinkTo.Location = new System.Drawing.Point(192, 43);
+            this.lblLinkTo.Location = new System.Drawing.Point(217, 43);
             this.lblLinkTo.Name = "lblLinkTo";
             this.lblLinkTo.Size = new System.Drawing.Size(28, 13);
             this.lblLinkTo.TabIndex = 3;
@@ -99,12 +115,13 @@
             // 
             this.lnkLinkToTarget.AutoSize = true;
             this.lnkLinkToTarget.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkLinkToTarget.Location = new System.Drawing.Point(226, 43);
+            this.lnkLinkToTarget.Location = new System.Drawing.Point(251, 43);
             this.lnkLinkToTarget.Name = "lnkLinkToTarget";
             this.lnkLinkToTarget.Size = new System.Drawing.Size(84, 13);
             this.lnkLinkToTarget.TabIndex = 4;
             this.lnkLinkToTarget.TabStop = true;
             this.lnkLinkToTarget.Text = "\\classic_cn";
+            this.lnkLinkToTarget.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLinkToTarget_LinkClicked);
             // 
             // lblWoWClassicPathTip
             // 
@@ -127,7 +144,7 @@
             // 
             this.lblMountInfo.AutoSize = true;
             this.lblMountInfo.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblMountInfo.Location = new System.Drawing.Point(176, 125);
+            this.lblMountInfo.Location = new System.Drawing.Point(198, 123);
             this.lblMountInfo.Name = "lblMountInfo";
             this.lblMountInfo.Size = new System.Drawing.Size(59, 13);
             this.lblMountInfo.TabIndex = 7;
@@ -143,7 +160,7 @@
             // 
             // btnRefreshStatus
             // 
-            this.btnRefreshStatus.Location = new System.Drawing.Point(130, 190);
+            this.btnRefreshStatus.Location = new System.Drawing.Point(152, 190);
             this.btnRefreshStatus.Name = "btnRefreshStatus";
             this.btnRefreshStatus.Size = new System.Drawing.Size(149, 32);
             this.btnRefreshStatus.TabIndex = 9;
@@ -155,7 +172,7 @@
             // 
             this.tdBtnSwitchToCN.AutoSize = true;
             this.tdBtnSwitchToCN.Checked = true;
-            this.tdBtnSwitchToCN.Location = new System.Drawing.Point(105, 238);
+            this.tdBtnSwitchToCN.Location = new System.Drawing.Point(127, 238);
             this.tdBtnSwitchToCN.Name = "tdBtnSwitchToCN";
             this.tdBtnSwitchToCN.Size = new System.Drawing.Size(14, 13);
             this.tdBtnSwitchToCN.TabIndex = 10;
@@ -165,7 +182,7 @@
             // 
             // btnSwitchToCN
             // 
-            this.btnSwitchToCN.Location = new System.Drawing.Point(130, 228);
+            this.btnSwitchToCN.Location = new System.Drawing.Point(152, 228);
             this.btnSwitchToCN.Name = "btnSwitchToCN";
             this.btnSwitchToCN.Size = new System.Drawing.Size(149, 32);
             this.btnSwitchToCN.TabIndex = 11;
@@ -177,7 +194,7 @@
             // 
             this.tdBtnSwitchToTW.AutoSize = true;
             this.tdBtnSwitchToTW.Checked = true;
-            this.tdBtnSwitchToTW.Location = new System.Drawing.Point(105, 275);
+            this.tdBtnSwitchToTW.Location = new System.Drawing.Point(127, 275);
             this.tdBtnSwitchToTW.Name = "tdBtnSwitchToTW";
             this.tdBtnSwitchToTW.Size = new System.Drawing.Size(14, 13);
             this.tdBtnSwitchToTW.TabIndex = 12;
@@ -186,7 +203,7 @@
             // 
             // btnSwitchToTW
             // 
-            this.btnSwitchToTW.Location = new System.Drawing.Point(130, 266);
+            this.btnSwitchToTW.Location = new System.Drawing.Point(152, 266);
             this.btnSwitchToTW.Name = "btnSwitchToTW";
             this.btnSwitchToTW.Size = new System.Drawing.Size(149, 31);
             this.btnSwitchToTW.TabIndex = 13;
@@ -196,7 +213,7 @@
             // 
             // btnUnmount
             // 
-            this.btnUnmount.Location = new System.Drawing.Point(130, 303);
+            this.btnUnmount.Location = new System.Drawing.Point(152, 303);
             this.btnUnmount.Name = "btnUnmount";
             this.btnUnmount.Size = new System.Drawing.Size(149, 31);
             this.btnUnmount.TabIndex = 14;
@@ -206,7 +223,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(130, 340);
+            this.btnExit.Location = new System.Drawing.Point(152, 340);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(149, 30);
             this.btnExit.TabIndex = 16;
@@ -217,7 +234,7 @@
             // chkBoxMinimizeToTaskbarWhenExiting
             // 
             this.chkBoxMinimizeToTaskbarWhenExiting.AutoSize = true;
-            this.chkBoxMinimizeToTaskbarWhenExiting.Location = new System.Drawing.Point(130, 386);
+            this.chkBoxMinimizeToTaskbarWhenExiting.Location = new System.Drawing.Point(152, 386);
             this.chkBoxMinimizeToTaskbarWhenExiting.Name = "chkBoxMinimizeToTaskbarWhenExiting";
             this.chkBoxMinimizeToTaskbarWhenExiting.Size = new System.Drawing.Size(156, 17);
             this.chkBoxMinimizeToTaskbarWhenExiting.TabIndex = 17;
@@ -269,11 +286,161 @@
             this.toolStripMenuItemExit.Text = "退出(&E)";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
+            // btnOpenWoWClassicFolder
+            // 
+            this.btnOpenWoWClassicFolder.Location = new System.Drawing.Point(409, 89);
+            this.btnOpenWoWClassicFolder.Name = "btnOpenWoWClassicFolder";
+            this.btnOpenWoWClassicFolder.Size = new System.Drawing.Size(44, 27);
+            this.btnOpenWoWClassicFolder.TabIndex = 18;
+            this.btnOpenWoWClassicFolder.Text = "打开";
+            this.btnOpenWoWClassicFolder.UseVisualStyleBackColor = true;
+            this.btnOpenWoWClassicFolder.Click += new System.EventHandler(this.btnOpenWoWClassicFolder_Click);
+            // 
+            // btnOpenWoWClassicLinkedFolder
+            // 
+            this.btnOpenWoWClassicLinkedFolder.Location = new System.Drawing.Point(409, 146);
+            this.btnOpenWoWClassicLinkedFolder.Name = "btnOpenWoWClassicLinkedFolder";
+            this.btnOpenWoWClassicLinkedFolder.Size = new System.Drawing.Size(44, 27);
+            this.btnOpenWoWClassicLinkedFolder.TabIndex = 19;
+            this.btnOpenWoWClassicLinkedFolder.Text = "打开";
+            this.btnOpenWoWClassicLinkedFolder.UseVisualStyleBackColor = true;
+            this.btnOpenWoWClassicLinkedFolder.Click += new System.EventHandler(this.btnOpenWoWClassicLinkedFolder_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripVersionLabel,
+            this.toolStripHelpLabel,
+            this.toolStripSourceLabel,
+            this.toolStripGiteeLabel,
+            this.toolStripGitHubLabel,
+            this.toolStripPaddingLabel,
+            this.toolStripAuthorLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 444);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.statusStrip.Size = new System.Drawing.Size(470, 26);
+            this.statusStrip.TabIndex = 20;
+            this.statusStrip.Text = "状态栏";
+            // 
+            // toolStripVersionLabel
+            // 
+            this.toolStripVersionLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripVersionLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripVersionLabel.IsLink = true;
+            this.toolStripVersionLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripVersionLabel.Name = "toolStripVersionLabel";
+            this.toolStripVersionLabel.Size = new System.Drawing.Size(78, 21);
+            this.toolStripVersionLabel.Text = "版本：v1.01";
+            this.toolStripVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripAuthorLabel
+            // 
+            this.toolStripAuthorLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripAuthorLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripAuthorLabel.IsLink = true;
+            this.toolStripAuthorLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripAuthorLabel.Name = "toolStripAuthorLabel";
+            this.toolStripAuthorLabel.Size = new System.Drawing.Size(72, 21);
+            this.toolStripAuthorLabel.Text = "作者：郭子";
+            this.toolStripAuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toolStripPaddingLabel
+            // 
+            this.toolStripPaddingLabel.AutoSize = false;
+            this.toolStripPaddingLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripPaddingLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripPaddingLabel.Name = "toolStripPaddingLabel";
+            this.toolStripPaddingLabel.Size = new System.Drawing.Size(40, 21);
+            // 
+            // toolStripSourceLabel
+            // 
+            this.toolStripSourceLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripSourceLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripSourceLabel.Name = "toolStripSourceLabel";
+            this.toolStripSourceLabel.Size = new System.Drawing.Size(36, 21);
+            this.toolStripSourceLabel.Text = "源码";
+            // 
+            // toolStripGiteeLabel
+            // 
+            this.toolStripGiteeLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Top | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripGiteeLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripGiteeLabel.IsLink = true;
+            this.toolStripGiteeLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripGiteeLabel.Name = "toolStripGiteeLabel";
+            this.toolStripGiteeLabel.Size = new System.Drawing.Size(42, 21);
+            this.toolStripGiteeLabel.Text = "Gitee";
+            // 
+            // toolStripGitHubLabel
+            // 
+            this.toolStripGitHubLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Top | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripGitHubLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripGitHubLabel.IsLink = true;
+            this.toolStripGitHubLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripGitHubLabel.Name = "toolStripGitHubLabel";
+            this.toolStripGitHubLabel.Size = new System.Drawing.Size(52, 21);
+            this.toolStripGitHubLabel.Text = "GitHub";
+            // 
+            // toolStripHelpLabel
+            // 
+            this.toolStripHelpLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripHelpLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripHelpLabel.IsLink = true;
+            this.toolStripHelpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripHelpLabel.Name = "toolStripHelpLabel";
+            this.toolStripHelpLabel.Size = new System.Drawing.Size(127, 21);
+            this.toolStripHelpLabel.Text = " 使用说明(NGA论坛) ";
+            // 
+            // AuthorInfoPanel
+            // 
+            this.AuthorInfoPanel.Controls.Add(this.lnkLabelAuthorInfoTW);
+            this.AuthorInfoPanel.Controls.Add(this.lnkLabelAuthorInfoCN);
+            this.AuthorInfoPanel.Location = new System.Drawing.Point(10, 412);
+            this.AuthorInfoPanel.Name = "AuthorInfoPanel";
+            this.AuthorInfoPanel.Size = new System.Drawing.Size(448, 28);
+            this.AuthorInfoPanel.TabIndex = 21;
+            // 
+            // lnkLabelAuthorInfoCN
+            // 
+            this.lnkLabelAuthorInfoCN.AutoSize = true;
+            this.lnkLabelAuthorInfoCN.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkLabelAuthorInfoCN.Location = new System.Drawing.Point(3, 8);
+            this.lnkLabelAuthorInfoCN.Name = "lnkLabelAuthorInfoCN";
+            this.lnkLabelAuthorInfoCN.Size = new System.Drawing.Size(186, 13);
+            this.lnkLabelAuthorInfoCN.TabIndex = 0;
+            this.lnkLabelAuthorInfoCN.TabStop = true;
+            this.lnkLabelAuthorInfoCN.Text = "国服/辛迪加/联盟/夏洛特(DK)";
+            // 
+            // lnkLabelAuthorInfoTW
+            // 
+            this.lnkLabelAuthorInfoTW.AutoSize = true;
+            this.lnkLabelAuthorInfoTW.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkLabelAuthorInfoTW.Location = new System.Drawing.Point(246, 8);
+            this.lnkLabelAuthorInfoTW.Name = "lnkLabelAuthorInfoTW";
+            this.lnkLabelAuthorInfoTW.Size = new System.Drawing.Size(199, 13);
+            this.lnkLabelAuthorInfoTW.TabIndex = 1;
+            this.lnkLabelAuthorInfoTW.TabStop = true;
+            this.lnkLabelAuthorInfoTW.Text = "亚服/逐风者/部落/夏洛特丷(DK)";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 419);
+            this.ClientSize = new System.Drawing.Size(470, 470);
+            this.Controls.Add(this.AuthorInfoPanel);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.btnOpenWoWClassicLinkedFolder);
+            this.Controls.Add(this.btnOpenWoWClassicFolder);
             this.Controls.Add(this.chkBoxMinimizeToTaskbarWhenExiting);
             this.Controls.Add(this.lblCurrentStatus);
             this.Controls.Add(this.lnkLinkToTarget);
@@ -302,6 +469,10 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);
             this.contextMenuStripTaskBar.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.AuthorInfoPanel.ResumeLayout(false);
+            this.AuthorInfoPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -332,6 +503,19 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideMain;
+        private System.Windows.Forms.Button btnOpenWoWClassicFolder;
+        private System.Windows.Forms.Button btnOpenWoWClassicLinkedFolder;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripVersionLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripAuthorLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripPaddingLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripSourceLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripGiteeLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripGitHubLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripHelpLabel;
+        private System.Windows.Forms.Panel AuthorInfoPanel;
+        private System.Windows.Forms.LinkLabel lnkLabelAuthorInfoTW;
+        private System.Windows.Forms.LinkLabel lnkLabelAuthorInfoCN;
     }
 }
 

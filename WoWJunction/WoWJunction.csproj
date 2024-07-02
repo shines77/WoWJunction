@@ -113,6 +113,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExplorerUtils.cs" />
     <Compile Include="FolderSelectDialog.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

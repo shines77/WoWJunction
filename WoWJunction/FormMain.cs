@@ -25,6 +25,8 @@ namespace WoWJunction
             Error
         };
 
+        public static string appVersion = "1.01";
+
         private const string FORM_CAPTION = "WoWJunction";
         private const string XML_CONFIG_FILENAME = "WoWJunction.exe.config.xml";
         private const string XML_CONFIG_ROOT = ""; // "configuration";
@@ -59,6 +61,8 @@ namespace WoWJunction
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            this.Text = "《魔兽世界》怀旧服（国服/亚服）切换器 v" + appVersion;
+
             bool readOK = ReadConfigFromXml();
 
             // 检查当前的绑定状态
@@ -681,6 +685,49 @@ namespace WoWJunction
             this.Dispose();
 
             Application.Exit();
+        }
+
+        private void OpenWoWClassicFolder()
+        {
+            string folderPath = wowConfig.folders.wow_classic_path;
+            if (!String.IsNullOrEmpty(folderPath)) {
+                ExplorerUtils.OpenFolder(folderPath);
+            }
+        }
+
+        private void OpenWoWClassicLinkedFolder()
+        {
+            string folderPath = null;
+
+            var switchStatus = symLinkChecker.GetSwitchStatus();
+            if (switchStatus == SwitchStatus.SwitchToCN)
+                folderPath = wowConfig.folders.wow_classic_path_cn;
+            else if (switchStatus == SwitchStatus.SwitchToTW)
+                folderPath = wowConfig.folders.wow_classic_path_tw;
+
+            if (!String.IsNullOrEmpty(folderPath)) {
+                ExplorerUtils.OpenFolder(folderPath);
+            }
+        }
+
+        private void lnkLinkToSource_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenWoWClassicFolder();
+        }
+
+        private void btnOpenWoWClassicFolder_Click(object sender, EventArgs e)
+        {
+            OpenWoWClassicFolder();
+        }
+
+        private void lnkLinkToTarget_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OpenWoWClassicLinkedFolder();
+        }
+
+        private void btnOpenWoWClassicLinkedFolder_Click(object sender, EventArgs e)
+        {
+            OpenWoWClassicLinkedFolder();
         }
     }
 }
