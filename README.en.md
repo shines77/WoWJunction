@@ -28,7 +28,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 本人是 `C++` 程序员，理论上可以用 `C++` 重写该软件，但由于用 `C++` 重写耗费的时间较长，暂不考虑。
 
-## Settings
+## Preparation
 
 1. 首先，把《魔兽世界》游戏以及《战网》客户端都关闭，不关闭的话，修改文件夹名可能会失败；
 2. 进入您的魔兽世界安装目录，例如：`C:\World of Warcraft`。
@@ -73,10 +73,10 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 1. Thanks for [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) shared his source code:
 
-[Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
+    [Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
 
 2. Thanks for [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) shared his blog:
 
-[.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
+    [.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
 
-3. Thanks for `Baidu` and all friends sharing 'C#' code on the Internet.
+3. Thanks for `Baidu` and all friends that sharing 'C#' source code on the Internet.

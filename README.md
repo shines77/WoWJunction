@@ -28,7 +28,7 @@
 
 本人是 `C++` 程序员，理论上可以用 `C++` 重写该软件，但由于用 `C++` 重写耗费的时间较长，暂不考虑。
 
-## 设置步骤
+## 准备工作
 
 1. 首先，把《魔兽世界》游戏以及《战网》客户端都关闭，不关闭的话，修改文件夹名可能会失败；
 2. 进入您的魔兽世界安装目录，例如：`C:\World of Warcraft`。
@@ -73,10 +73,10 @@
 
 1. 感谢 [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) 分享的源码：
 
-[Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
+    [Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
 
 2. 感谢 [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) 分享的博客：
 
-[.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
+    [.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
 
-3. 感谢 `百度` 和 所有互联网分享 `C#` 代码的朋友。
+3. 感谢 `百度` 和 所有在互联网分享 `C#` 代码的朋友们。
