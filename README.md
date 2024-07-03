@@ -4,7 +4,11 @@
 
 ## 简介
 
-魔兽世界怀旧服(国服/亚服)切换器 （WoWJunction）
+魔兽世界怀旧服(国服/亚服)切换器（WoWJunction）
+
+## 开源协议
+
+[CC-BY-SA-4.0](./LICENSE)
 
 ## 原理
 
@@ -20,9 +24,9 @@
 
 ## 依赖库
 
-本软件是基于微软的 `.Net Framework v4.5.2`，采用 `C#` 编写的。在 `Windows 7` 或后续的 `Windows` 版本应该都已经自带了，如果运行时显示需要安装 `.Net Framework`，请自行百度搜索最新版的 `.Net Framework`安装即可，要求是版本要大于或等于 `v4.5.2`。
+本软件是基于微软的 `.Net Framework v4.5.2`，采用 `C#` 编写的。`Windows 10` 或 `Windows 11` 应该都已经自带了，如果运行时显示 `.Net Framework` 的版本过低，请自行百度搜索最新版的 `.Net Framework` 安装即可，版本必须大于或等于 `v4.5.2`。
 
-本人是 `C++` 程序员，原则上可以用 `C++` 重写该软件，但由于用 `C++` 重写需要耗费的时间比较长，如无特殊需求，就不重写了。有人出资，或者哪天我有兴致又有时间的话，会考虑。
+本人是 `C++` 程序员，理论上完全可以用 `C++` 重写该软件，但由于用 `C++` 重写耗费的时间较长，暂不考虑。除非有人出资，或者哪天我有时间也有兴致的话。
 
 ## 设置步骤
 
@@ -47,18 +51,16 @@
 2. xxxx
 3. xxxx
 
-## 参与贡献
+## 作者
 
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+`作者`：郭子([gz_shines@msn.com](mailto:gz_shines@msn.com))
 
-## 特技
+`国服`：一区 - 辛迪加 - 联盟 - 夏洛特（DK），司马云信（猎人）
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5. Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+`亚服`：全球服 - 逐风者 - 部落 - 夏洛特丷（DK），夏洛克丶（术士）
+
+## Git 仓库
+
+`Gitee`: [https://gitee.com/shines77/WoWJunction](https://gitee.com/shines77/WoWJunction)
+
+`GitHub`: [https://github.com/shines77/WoWJunction](https://github.com/shines77/WoWJunction)
