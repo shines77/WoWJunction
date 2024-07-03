@@ -25,7 +25,15 @@ namespace WoWJunction
             Error
         };
 
-        public static string appVersion = "1.01";
+        public static string appVersion = "1.0.1";
+        public static string App_Release_URL = @"https://gitee.com/shines77/WoWJunction/releases/tag/1.0";
+
+        public static string NGA_BBS_Topic_URL = @"https://bbs.nga.cn/read.php?tid=40706494";
+
+        public static string Gitee_Repository_URL = @"https://gitee.com/shines77/WoWJunction";
+        public static string GitHub_Repository_URL = @"https://github.com/shines77/WoWJunction";
+
+        public static string Author_Git_URL = @"https://gitee.com/shines77";
 
         private const string FORM_CAPTION = "WoWJunction";
         private const string XML_CONFIG_FILENAME = "WoWJunction.exe.config.xml";
@@ -62,6 +70,7 @@ namespace WoWJunction
         private void frmMain_Load(object sender, EventArgs e)
         {
             this.Text = "《魔兽世界》怀旧服（国服/亚服）切换器 v" + appVersion;
+            toolStripVersionLabel.Text = "版本：" + appVersion;
 
             bool readOK = ReadConfigFromXml();
 
@@ -221,13 +230,13 @@ namespace WoWJunction
 
         private string ReadInstallPathFromRegistry()
         {
-            string wowInstallPath = "";
+            string wowInstallPath = string.Empty;
             try {
                 using (RegistryKey rootKey = Registry.LocalMachine) {
                     if (rootKey != null) {
                         using (RegistryKey subKey = rootKey.OpenSubKey(@"Software\WOW6432Node\Blizzard Entertainment\World of Warcraft")) {
                             if (subKey != null) {
-                                object objInstallPath = subKey.GetValue("InstallPath", "");
+                                object objInstallPath = subKey.GetValue("InstallPath", null);
                                 if (objInstallPath != null) {
                                     wowInstallPath = objInstallPath.ToString();
                                 }
@@ -237,7 +246,7 @@ namespace WoWJunction
                         if (string.IsNullOrEmpty(wowInstallPath)) {
                             using (RegistryKey subKey2 = rootKey.OpenSubKey(@"Software\Blizzard Entertainment\World of Warcraft")) {
                                 if (subKey2 != null) {
-                                    object objInstallPath = subKey2.GetValue("InstallPath", "");
+                                    object objInstallPath = subKey2.GetValue("InstallPath", null);
                                     if (objInstallPath != null) {
                                         wowInstallPath = objInstallPath.ToString();
                                     }
@@ -691,7 +700,7 @@ namespace WoWJunction
         {
             string folderPath = wowConfig.folders.wow_classic_path;
             if (!String.IsNullOrEmpty(folderPath)) {
-                ExplorerUtils.OpenFolder(folderPath);
+                ExplorerHelper.OpenFolder(folderPath);
             }
         }
 
@@ -706,7 +715,7 @@ namespace WoWJunction
                 folderPath = wowConfig.folders.wow_classic_path_tw;
 
             if (!String.IsNullOrEmpty(folderPath)) {
-                ExplorerUtils.OpenFolder(folderPath);
+                ExplorerHelper.OpenFolder(folderPath);
             }
         }
 
@@ -728,6 +737,36 @@ namespace WoWJunction
         private void btnOpenWoWClassicLinkedFolder_Click(object sender, EventArgs e)
         {
             OpenWoWClassicLinkedFolder();
+        }
+
+        private void toolStripVersionLabel_Click(object sender, EventArgs e)
+        {
+            ExplorerHelper.OpenUrl(App_Release_URL);
+        }
+
+        private void toolStripHelpLabel_Click(object sender, EventArgs e)
+        {
+            ExplorerHelper.OpenUrl(NGA_BBS_Topic_URL);
+        }
+
+        private void toolStripGiteeLabel_Click(object sender, EventArgs e)
+        {
+            ExplorerHelper.OpenUrl(Gitee_Repository_URL);
+        }
+
+        private void toolStripGitHubLabel_Click(object sender, EventArgs e)
+        {
+            ExplorerHelper.OpenUrl(GitHub_Repository_URL);
+        }
+
+        private void toolStripAuthorLabel_Click(object sender, EventArgs e)
+        {
+            //BrowserHelper.OpenUrlByDefaultBrowser(Author_Git_URL);
+            //BrowserHelper.OpenUrlByChrome_FromChromeHTML(Author_Git_URL);
+            //BrowserHelper.OpenUrl_FromClientInternet(BrowserId.GoogleChrome, Author_Git_URL);
+            //BrowserHelper.OpenUrl_FromClientInternet(BrowserId.FireFox, Author_Git_URL);
+            //BrowserHelper.OpenUrl_FromClientInternet(BrowserId.InterExplorer, Author_Git_URL);
+            ExplorerHelper.OpenUrl(Author_Git_URL);
         }
     }
 }

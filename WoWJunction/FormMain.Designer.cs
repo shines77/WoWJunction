@@ -56,15 +56,15 @@
             this.btnOpenWoWClassicLinkedFolder = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripVersionLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripAuthorLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripPaddingLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripHelpLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSourceLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripGiteeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripGitHubLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripHelpLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripPaddingLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripAuthorLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.AuthorInfoPanel = new System.Windows.Forms.Panel();
-            this.lnkLabelAuthorInfoCN = new System.Windows.Forms.LinkLabel();
             this.lnkLabelAuthorInfoTW = new System.Windows.Forms.LinkLabel();
+            this.lnkLabelAuthorInfoCN = new System.Windows.Forms.LinkLabel();
             this.contextMenuStripTaskBar.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.AuthorInfoPanel.SuspendLayout();
@@ -332,32 +332,23 @@
             this.toolStripVersionLabel.IsLink = true;
             this.toolStripVersionLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.toolStripVersionLabel.Name = "toolStripVersionLabel";
-            this.toolStripVersionLabel.Size = new System.Drawing.Size(78, 21);
-            this.toolStripVersionLabel.Text = "版本：v1.01";
+            this.toolStripVersionLabel.Size = new System.Drawing.Size(81, 21);
+            this.toolStripVersionLabel.Text = "版本：v1.0.1";
             this.toolStripVersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripVersionLabel.Click += new System.EventHandler(this.toolStripVersionLabel_Click);
             // 
-            // toolStripAuthorLabel
+            // toolStripHelpLabel
             // 
-            this.toolStripAuthorLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            this.toolStripHelpLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.toolStripAuthorLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
-            this.toolStripAuthorLabel.IsLink = true;
-            this.toolStripAuthorLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.toolStripAuthorLabel.Name = "toolStripAuthorLabel";
-            this.toolStripAuthorLabel.Size = new System.Drawing.Size(72, 21);
-            this.toolStripAuthorLabel.Text = "作者：郭子";
-            this.toolStripAuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // toolStripPaddingLabel
-            // 
-            this.toolStripPaddingLabel.AutoSize = false;
-            this.toolStripPaddingLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.toolStripPaddingLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
-            this.toolStripPaddingLabel.Name = "toolStripPaddingLabel";
-            this.toolStripPaddingLabel.Size = new System.Drawing.Size(40, 21);
+            this.toolStripHelpLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripHelpLabel.IsLink = true;
+            this.toolStripHelpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripHelpLabel.Name = "toolStripHelpLabel";
+            this.toolStripHelpLabel.Size = new System.Drawing.Size(127, 21);
+            this.toolStripHelpLabel.Text = " 使用说明(NGA论坛) ";
+            this.toolStripHelpLabel.Click += new System.EventHandler(this.toolStripHelpLabel_Click);
             // 
             // toolStripSourceLabel
             // 
@@ -377,6 +368,7 @@
             this.toolStripGiteeLabel.Name = "toolStripGiteeLabel";
             this.toolStripGiteeLabel.Size = new System.Drawing.Size(42, 21);
             this.toolStripGiteeLabel.Text = "Gitee";
+            this.toolStripGiteeLabel.Click += new System.EventHandler(this.toolStripGiteeLabel_Click);
             // 
             // toolStripGitHubLabel
             // 
@@ -388,18 +380,31 @@
             this.toolStripGitHubLabel.Name = "toolStripGitHubLabel";
             this.toolStripGitHubLabel.Size = new System.Drawing.Size(52, 21);
             this.toolStripGitHubLabel.Text = "GitHub";
+            this.toolStripGitHubLabel.Click += new System.EventHandler(this.toolStripGitHubLabel_Click);
             // 
-            // toolStripHelpLabel
+            // toolStripPaddingLabel
             // 
-            this.toolStripHelpLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            this.toolStripPaddingLabel.AutoSize = false;
+            this.toolStripPaddingLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.toolStripHelpLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
-            this.toolStripHelpLabel.IsLink = true;
-            this.toolStripHelpLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.toolStripHelpLabel.Name = "toolStripHelpLabel";
-            this.toolStripHelpLabel.Size = new System.Drawing.Size(127, 21);
-            this.toolStripHelpLabel.Text = " 使用说明(NGA论坛) ";
+            this.toolStripPaddingLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripPaddingLabel.Name = "toolStripPaddingLabel";
+            this.toolStripPaddingLabel.Size = new System.Drawing.Size(40, 21);
+            // 
+            // toolStripAuthorLabel
+            // 
+            this.toolStripAuthorLabel.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripAuthorLabel.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.toolStripAuthorLabel.IsLink = true;
+            this.toolStripAuthorLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.toolStripAuthorLabel.Name = "toolStripAuthorLabel";
+            this.toolStripAuthorLabel.Size = new System.Drawing.Size(72, 21);
+            this.toolStripAuthorLabel.Text = "作者：郭子";
+            this.toolStripAuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripAuthorLabel.Click += new System.EventHandler(this.toolStripAuthorLabel_Click);
             // 
             // AuthorInfoPanel
             // 
@@ -409,17 +414,6 @@
             this.AuthorInfoPanel.Name = "AuthorInfoPanel";
             this.AuthorInfoPanel.Size = new System.Drawing.Size(448, 28);
             this.AuthorInfoPanel.TabIndex = 21;
-            // 
-            // lnkLabelAuthorInfoCN
-            // 
-            this.lnkLabelAuthorInfoCN.AutoSize = true;
-            this.lnkLabelAuthorInfoCN.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.lnkLabelAuthorInfoCN.Location = new System.Drawing.Point(3, 8);
-            this.lnkLabelAuthorInfoCN.Name = "lnkLabelAuthorInfoCN";
-            this.lnkLabelAuthorInfoCN.Size = new System.Drawing.Size(186, 13);
-            this.lnkLabelAuthorInfoCN.TabIndex = 0;
-            this.lnkLabelAuthorInfoCN.TabStop = true;
-            this.lnkLabelAuthorInfoCN.Text = "国服/辛迪加/联盟/夏洛特(DK)";
             // 
             // lnkLabelAuthorInfoTW
             // 
@@ -431,6 +425,17 @@
             this.lnkLabelAuthorInfoTW.TabIndex = 1;
             this.lnkLabelAuthorInfoTW.TabStop = true;
             this.lnkLabelAuthorInfoTW.Text = "亚服/逐风者/部落/夏洛特丷(DK)";
+            // 
+            // lnkLabelAuthorInfoCN
+            // 
+            this.lnkLabelAuthorInfoCN.AutoSize = true;
+            this.lnkLabelAuthorInfoCN.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkLabelAuthorInfoCN.Location = new System.Drawing.Point(3, 8);
+            this.lnkLabelAuthorInfoCN.Name = "lnkLabelAuthorInfoCN";
+            this.lnkLabelAuthorInfoCN.Size = new System.Drawing.Size(186, 13);
+            this.lnkLabelAuthorInfoCN.TabIndex = 0;
+            this.lnkLabelAuthorInfoCN.TabStop = true;
+            this.lnkLabelAuthorInfoCN.Text = "国服/辛迪加/联盟/夏洛特(DK)";
             // 
             // FormMain
             // 
@@ -464,7 +469,7 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "《魔兽世界》怀旧服（国服/亚服）切换器 v1.0";
+            this.Text = "《魔兽世界》怀旧服（国服/亚服）切换器 v1.0.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Shown += new System.EventHandler(this.frmMain_Shown);

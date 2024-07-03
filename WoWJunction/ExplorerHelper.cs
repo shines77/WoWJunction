@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace WoWJunction
 {
-    public class ExplorerUtils
+    public class ExplorerHelper
     {
         public static void OpenFolder(string folderPath)
         {
@@ -67,6 +67,26 @@ namespace WoWJunction
                 if (waitForClose) {
                     process.WaitForExit();
                 }
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+            finally {
+                process?.Close();
+            }
+        }
+
+        public static void OpenUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return;
+
+            Process process = new Process();
+            ProcessStartInfo psi = new ProcessStartInfo(url);
+            psi.UseShellExecute = true;
+            process.StartInfo = psi;
+
+            try {
+                process.Start();
             }
             catch (Exception ex) {
                 throw ex;
