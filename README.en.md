@@ -36,14 +36,14 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
     * **如果你之前玩的是怀旧服（亚服）**
 
         1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，将其更名为“`_classic_tw_`”；
-        2. 把这个“`_classic_tw_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_cn_`”；
+        2. 改名完成后，将这个“`_classic_tw_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_cn_`”；
 
     * **如果你之前玩的是怀旧服（国服）**
 
         1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，将其更名为“`_classic_cn_`”；
-        2. 把这个“`_classic_cn_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_tw_`”；
+        2. 改名完成后，将这个“`_classic_cn_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_tw_`”；
 
-3. 这样你就得到“`_classic_cn_`”，“`_classic_tw_`”两个文件夹，分别代表国服和亚服游戏目录。其中 `cn` 是中国的缩写，代表国服；`tw` 是台湾的缩写，代表亚服/台服。如下图所示：
+3. 这样你就得到“`_classic_cn_`”，“`_classic_tw_`”两个文件夹，分别代表国服和亚服游戏目录。其中 `cn` 是中国的缩写，代表国服；`tw` 是台湾的缩写，代表亚服/台服。效果如下：
 
 ![两个目录改名后的效果](./doc/images/rename-folders.png)
 
