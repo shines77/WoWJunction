@@ -8,7 +8,7 @@
 
 ## 开源协议
 
-[CC-BY-SA-4.0](./LICENSE)
+[CC-BY-SA-4.0](./CC-BY-SA-4.0.cn.md)
 
 ## 原理
 

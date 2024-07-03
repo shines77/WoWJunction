@@ -8,7 +8,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 ## License
 
-[CC-BY-SA-4.0](./LICENSE)
+[CC-BY-SA-4.0](./CC-BY-SA-4.0.en.md)
 
 ## Principle
 
@@ -18,7 +18,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 我们利用 `软链接` 功能，创建一个虚拟的《魔兽世界》怀旧服文件夹 `_classic_` ，让这个虚拟的文件夹指向真实的怀旧服（国服）文件夹 `_classic_cn_` 或者怀旧服（亚服）文件夹 `_classic_tw_`，来实现切换的目的。
 
-## Name Origin
+## Origin
 
 `Windows` 上 `微软` 官方做一个管理目录软链接的工具 [Junction](https://learn.microsoft.com/zh-cn/sysinternals/downloads/junction)，中文叫 `交接点`，这也是本软件名 `WoWJunction` 的由来。本程序最早的代码，也是从搜索 “`微软 Junction`” 开始的，`codeproject` 上有人分享了一份源码：[Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)，这是这个软件的核心代码。
 
@@ -57,7 +57,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 `CN`：一区 - 辛迪加 - 联盟 - 夏洛特（DK），司马云信（猎人）
 
-`Asian`：全球服 - 逐风者 - 部落 - 夏洛特丷（DK），夏洛克丶（术士）
+`Asian/TW`：全球服 - 逐风者 - 部落 - 夏洛特丷（DK），夏洛克丶（术士）
 
 ## Git repository
 
