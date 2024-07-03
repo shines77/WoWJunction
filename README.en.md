@@ -47,7 +47,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 如下图所示：
 
-[!两个目录改名后的效果](./doc/images/rename-folders.png)
+![两个目录改名后的效果](./doc/images/rename-folders.png)
 
 ## Manual
 

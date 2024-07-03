@@ -47,7 +47,7 @@
 
 如下图所示：
 
-[!两个目录改名后的效果](./doc/images/rename-folders.png)
+![两个目录改名后的效果](./doc/images/rename-folders.png)
 
 ## 使用说明
 
