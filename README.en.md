@@ -26,7 +26,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 本软件是基于微软的 `.Net Framework v4.5.2`，采用 `C#` 编写的。`Windows 10` 或 `Windows 11` 应该都已经自带了，如果运行时显示 `.Net Framework` 的版本过低，请自行百度搜索最新版的 `.Net Framework` 安装即可，版本必须大于或等于 `v4.5.2`。
 
-本人是 `C++` 程序员，理论上完全可以用 `C++` 重写该软件，但由于用 `C++` 重写耗费的时间较长，暂不考虑。除非有人出资，或者哪天我有时间也有兴致的话。
+特此声明，本人是 `C++` 程序员，理论上可以用 `C++` 重写该软件，但由于用 `C++` 重写耗费的时间较长，暂不考虑。
 
 ## Settings
 
@@ -35,15 +35,19 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
     * **如果你之前玩的是怀旧服（亚服）**
 
-        1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，则将其更名为“`_classic_tw_`”，它就是你真实的怀旧服（亚服）文件夹；
-        2. 把你更名后的这个文件夹“`_classic_tw_`”，复制一份，并粘贴到当前文件夹，并重名为“`_classic_cn_`”，这就是你真实的怀旧服（国服）文件夹；
+        1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，将其更名为“`_classic_tw_`”；
+        2. 把这个“`_classic_tw_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_cn_`”；
 
     * **如果你之前玩的是怀旧服（国服）**
 
-        1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，则将其更名为“`_classic_cn_`”，它就是你真实的怀旧服（国服）文件夹；
-        2. 把你更名后的这个文件夹“`_classic_cn_`”，复制一份，并粘贴到当前文件夹，并重名为“`_classic_tw_`”，这就是你真实的怀旧服（亚服）文件夹；
+        1. 找到《魔兽世界》怀旧服的文件夹“`_classic_`”，将其更名为“`_classic_cn_`”；
+        2. 把这个“`_classic_cn_`”目录复制一份，并粘贴到当前文件夹，并重名为“`_classic_tw_`”；
 
 3. 这样你就得到“`_classic_cn_`”，“`_classic_tw_`”两个文件夹，分别代表国服和亚服游戏目录。其中 `cn` 是中国的缩写，代表国服；`tw` 是台湾的缩写，代表亚服/台服。
+
+如下图所示：
+
+[!两个目录改名后的效果](./doc/images/rename-folders.png)
 
 ## Manual
 
@@ -55,7 +59,7 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 `Author`：GuoXH([gz_shines@msn.com](mailto:gz_shines@msn.com))
 
-`CN`：一区 - 辛迪加 - 联盟 - 夏洛特（DK），司马云信（猎人）
+`CN`：一区 - 辛迪加 - 联盟 - 夏洛特（DK），司马云信丶（猎人）
 
 `Asian/TW`：全球服 - 逐风者 - 部落 - 夏洛特丷（DK），夏洛克丶（术士）
 
@@ -64,3 +68,15 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 `Gitee`: [https://gitee.com/shines77/WoWJunction](https://gitee.com/shines77/WoWJunction)
 
 `GitHub`: [https://github.com/shines77/WoWJunction](https://github.com/shines77/WoWJunction)
+
+## Thanks
+
+1. Thanks for [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) shared his source code:
+
+[Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
+
+2. Thanks for [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) shared his blog:
+
+[.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
+
+3. Thanks for `Baidu` and all friends sharing 'C#' code on the Internet.
