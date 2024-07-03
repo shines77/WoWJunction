@@ -71,11 +71,11 @@
 
 ## 感谢
 
-1. 感谢 [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) 分享的源码：
+1. 感谢 [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) 在 `codeproject` 上分享的源码：
 
     [Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
 
-2. 感谢 [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) 分享的博客：
+2. 感谢 [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) 在 `腾讯云文档` 上分享的博客：
 
     [.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
 

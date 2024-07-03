@@ -71,11 +71,11 @@ World of Warcraft classic (CN/TW Server) switcher（WoWJunction）
 
 ## Thanks
 
-1. Thanks for [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) shared his source code:
+1. Thanks for [jeff.brown](https://www.codeproject.com/script/Membership/View.aspx?mid=1994253) shared his source code on `codeproject`:
 
     [Manipulating NTFS Junction Points in .NET](https://www.codeproject.com/Articles/15633/Manipulating-NTFS-Junction-Points-in-NET)
 
-2. Thanks for [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) shared his blog:
+2. Thanks for [walterlv - 吕毅](https://cloud.tencent.com/developer/column/71200) shared his blog on `Tencent cloud document`:
 
     [.NET 实现 NTFS 文件系统的硬链接 mklink /J（Junction）](https://cloud.tencent.com/developer/article/2348956)
 
